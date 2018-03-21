@@ -28,9 +28,9 @@ It will give hints.
 
 
 ## authors:
-Sam Alston
-Jack Kinne
-Tom Murphy
+- Sam Alston
+- Jack Kinne
+- Tom Murphy
 
 ## Class:
 CS 480 Mobile Apps
