@@ -1,12 +1,33 @@
 <!--?xml version="1.0" encoding="utf-8"?-->
-<linearlayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="fill_parent" android:layout_height="fill_parent" android:orientation="vertical" >
+<RelativeLayout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
 
-    <edittext android:id="@+id/editTextInput" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Enter search text">
+    >
 
-        <requestfocus>
-        </requestfocus></edittext>
+    <EditText
+        android:id="@+id/editTextInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter search text" />
 
-    <button android:id="@+id/button1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Search" android:layout_gravity="center">
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editTextInput"
+        android:text="Search">
 
 
-    </button></linearlayout>
+    </Button>
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/button1"
+        android:text="Results" />
+
+</RelativeLayout>

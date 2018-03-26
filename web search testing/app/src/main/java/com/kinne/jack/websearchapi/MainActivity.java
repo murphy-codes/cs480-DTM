@@ -20,9 +20,7 @@ public class MainActivity extends AppCompatActivity {
     Button btn;
     TextView resultTextView;
 
-    eText = (EditText) findViewById(R.id.edittext);
-    btn = (Button) findViewById(R.id.button);
-    resultTextView = (TextView) findViewById(R.id.textView1);
+
 
 
     /** Called when the activity is first created. */
@@ -31,13 +29,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        editTextInput = (EditText) findViewById(R.id.editTextInput);
+        eText = (EditText) findViewById(R.id.editTextInput);
+        btn = (Button) findViewById(R.id.button1);
+        resultTextView = (TextView) findViewById(R.id.textView1);
 
         // button onClick
         btn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                final String searchString = editTextInput.getText().toString();
+                final String searchString = eText.getText().toString();
 
                 //resultTextView.setText("Searching for : " + searchString);
                 onSearchClick(v);
@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
     {
         try {
             Intent intent = new Intent(Intent.ACTION_WEB_SEARCH);
-            String term = editTextInput.getText().toString();
+            String term = eText.getText().toString();
             intent.putExtra(SearchManager.QUERY, term);
             startActivity(intent);
         } catch (Exception e) {
