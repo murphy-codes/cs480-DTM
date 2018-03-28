@@ -164,18 +164,68 @@ public class MainActivity extends AppCompatActivity {
             // TODO: check this.exception
             // TODO: do something with the feed
 
-//            try {
-//                JSONObject object = (JSONObject) new JSONTokener(response).nextValue();
-//                String requestID = object.getString("requestId");
-//                int likelihood = object.getInt("likelihood");
-//                JSONArray photos = object.getJSONArray("photos");
-//                .
-//                .
-//                .
-//                .
-//            } catch (JSONException e) {
-//                e.printStackTrace();
-//            }
+                try {
+                    //JSONObject object = (JSONObject) new JSONTokener(response).nextValue();
+                      //String requestID = object.getString("requestId");
+                      //int likelihood = object.getInt("likelihood");
+                      //JSONArray photos = object.getJSONArray("photos");
+                    JSONObject movieObject = new JSONObject(response);
+                    String title = movieObject.getString("Title");
+                    String year = movieObject.getString("Year");
+                    String rated = movieObject.getString("Rated");
+                    String released = movieObject.getString("Released");
+                    String runtime = movieObject.getString("Runtime");
+                    String genre = movieObject.getString("Genre");
+                    String director = movieObject.getString("Director");
+                    String writer = movieObject.getString("Writer");
+                    String actors = movieObject.getString("Actors");
+                    String plot = movieObject.getString("Plot");
+                    String language = movieObject.getString("Language");
+                    String country = movieObject.getString("Country");
+                    String awards = movieObject.getString("Awards");
+                    String poster = movieObject.getString("Poster");
+                    //String ratings = movieObject.getString("Ratings");
+                    //String r0 = movieObject.getString("0");
+                    //String r1 = movieObject.getString("1");
+                    //String r2 = movieObject.getString("2");
+                    String metascore = movieObject.getString("Metascore");
+                    String imdbRating = movieObject.getString("imdbRating");
+                    String imdbVotes = movieObject.getString("imdbVotes");
+                    String imdbID = movieObject.getString("imdbID");
+                    String type = movieObject.getString("Type");
+                    String DVD = movieObject.getString("DVD");
+                    String boxOffice = movieObject.getString("BoxOffice");
+                    String production = movieObject.getString("Production");
+                    String website = movieObject.getString("Website");
+                    String responseTF = movieObject.getString("Response");
+
+                    results.setText("Title: " + title + "\n" +
+                            "Year: " + year + "\n" +
+                            "Rated: " + rated + "\n" +
+                            "Released: " + released + "\n" +
+                            "Runtime: " + runtime + "\n" +
+                            "Genre: " + genre + "\n" +
+                            "Director: " + director + "\n" +
+                            "Actors: " + actors + "\n" +
+                            "Plot: " + plot + "\n" +
+                            "Language: " + language + "\n" +
+                            "Country: " + country + "\n" +
+                            "Awards: " + awards + "\n" +
+                            "Poster: " + poster + "\n" +
+                            "Metascore: " + metascore + "\n" +
+                            "imdbRating: " + imdbRating + "\n" +
+                            "imdbVotes: " + imdbVotes + "\n" +
+                            "imdbID: " + imdbID + "\n" +
+                            "Type: " + type + "\n" +
+                            "DVD release date: " + DVD + "\n" +
+                            "Box Office: " + boxOffice + "\n" +
+                            "Production: " + production + "\n" +
+                            "Website: " + website + "\n" +
+                            "Response: " + responseTF);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
         }
     }
 }
