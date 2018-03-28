@@ -184,10 +184,10 @@ public class MainActivity extends AppCompatActivity {
                     String country = movieObject.getString("Country");
                     String awards = movieObject.getString("Awards");
                     String poster = movieObject.getString("Poster");
-                    //String ratings = movieObject.getString("Ratings");
-                    //String r0 = movieObject.getString("0");
-                    //String r1 = movieObject.getString("1");
-                    //String r2 = movieObject.getString("2");
+                      //String ratings = movieObject.getString("Ratings");
+                      //String r0 = movieObject.getString("0");
+                      //String r1 = movieObject.getString("1");
+                      //String r2 = movieObject.getString("2");
                     String metascore = movieObject.getString("Metascore");
                     String imdbRating = movieObject.getString("imdbRating");
                     String imdbVotes = movieObject.getString("imdbVotes");
