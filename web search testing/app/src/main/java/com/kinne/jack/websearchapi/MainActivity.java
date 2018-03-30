@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -26,6 +27,9 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class MainActivity extends AppCompatActivity {
 
     EditText eText;
@@ -34,12 +38,22 @@ public class MainActivity extends AppCompatActivity {
 
     String searchTerm = "matrix";
     String returnString;
+    String inputString;
+
+    //saved values from our search
+    private HashMap<String,String> resultsSearch;
 
     //send a RESTful request for google custom search
-    void googleSearch() {
+    void googleSearch(String searchTerm ) {
+
+        //hashmap return
+        //final HashMap <String,String> resultsSearch = new HashMap<String,String>();
+
         //instance the requestQueue
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url = "https://www.googleapis.com/customsearch/v1?key=AIzaSyBuwIMBG5YjqxxkDsQEjz-el2xHw15RfFQ&cx=015559890765402091894:0yoxulceyae&q="+ searchTerm;
+
+        //grab the API key from secret.xml
+        String url = "https://www.googleapis.com/customsearch/v1?key=" + inputString + "&cx=015559890765402091894:0yoxulceyae&q="+ searchTerm;
 
         //request a string response from provided URL
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null,
@@ -50,6 +64,36 @@ public class MainActivity extends AppCompatActivity {
                 String temp = "Response is: " + response.toString();
                 resultTextView.setText(temp);
                 returnString = temp;
+
+                //save our JSON object
+                JSONObject resultsObject = new JSONObject((Map) response);
+
+                //we'll need to walk the map , possibly with a fore each?
+
+                //catch some strings, store in an unordered map.
+                try {
+                    String title = resultsObject.getString("Title");
+                    resultsSearch.put("title", title);
+                    String description = resultsObject.getString("description");
+                    resultsSearch.put("description", description);
+                    //keywords
+                    //genre
+                    //release_date
+                    //runtime
+                    //person  ..  [name]
+                    //directed_by
+
+                    Toast.makeText(getApplicationContext(), title,
+                            Toast.LENGTH_SHORT).show();
+
+                    Toast.makeText(getApplicationContext(), description,
+                            Toast.LENGTH_SHORT).show();
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
             }
 
         }, new Response.ErrorListener() {
@@ -59,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
                 resultTextView.setText(temp2);
             }
         });
-
+        //fire request
         queue.add(jsonObjectRequest);
     }
 
@@ -75,23 +119,30 @@ public class MainActivity extends AppCompatActivity {
         //set textview as scrollable
         resultTextView.setMovementMethod(new ScrollingMovementMethod());
 
+        //api key
+        String google_search_api_key = getString(R.string.google_search_api_key);
+        inputString = google_search_api_key;
+
         // button onClick
         btn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
                 final String searchString = eText.getText().toString();
 
-                //resultTextView.setText("Searching for : " + searchString);
+                resultTextView.setText("Searching for : " + searchString);
+
+                //call to google window search
                 //onSearchClick(v);
 
                 //call to custom search
-                googleSearch();
+                googleSearch(searchString);
 
             }
         });
 
     }
 
+    //create a google search call, but send the user to a google browser window.
     public void onSearchClick(View v)
     {
         try {
