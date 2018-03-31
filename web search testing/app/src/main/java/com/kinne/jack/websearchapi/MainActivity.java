@@ -23,10 +23,13 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Array;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -37,11 +40,30 @@ public class MainActivity extends AppCompatActivity {
     TextView resultTextView;
 
     String searchTerm = "matrix";
-    String returnString;
     String inputString;
 
     //saved values from our search
     private HashMap<String,String> resultsSearch;
+
+    //saved values from search in GSON format
+    public class MovieObject {
+        private Array title;
+        private String description;
+        private String genre;
+        private String directed_by;
+        private String keywords;
+        private String runtime;
+
+        public Array getTitle() {
+            return this.title;
+        }
+
+        public String getDescription() {
+            return this.description;
+        }
+
+    }
+
 
     //send a RESTful request for google custom search
     void googleSearch(String searchTerm ) {
@@ -61,11 +83,23 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(JSONObject response) {
                 //display the first 500 characters of the response string.
-                String temp = "Response is: " + response.toString();
-                resultTextView.setText(temp);
-                returnString = temp;
+                String jsonString = "Response is: " + response.toString();
+                resultTextView.setText(jsonString);
 
-                //save our JSON object
+
+
+                //second option: GSON.  make a movieObject from our defined class.
+                GsonBuilder gsonBuilder = new GsonBuilder();
+                Gson gson = gsonBuilder.create();
+                MovieObject movieObject = gson.fromJson(jsonString, MovieObject.class);
+
+                //get a value from our new movieObject, see if its valid
+                Array titlesArray = movieObject.getTitle();
+                String theDescription = movieObject.getDescription();
+
+
+
+                //save our JSON object as a map - one option.
                 JSONObject resultsObject = new JSONObject((Map) response);
 
                 //we'll need to walk the map , possibly with a fore each?
