@@ -1,4 +1,5 @@
 package com.kinne.jack.websearchapi;
+//Main Activity will launch and display a"Play" button to launch other activities.
 
 import android.app.SearchManager;
 import android.content.Intent;
@@ -28,85 +29,29 @@ import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity {
 
-    EditText eText;
-    Button btn;
-    TextView resultTextView;
+    private Button playButton;
 
-    String searchTerm = "matrix";
-    String returnString;
-
-    //send a RESTful request for google custom search
-    void googleSearch() {
-        //instance the requestQueue
-        RequestQueue queue = Volley.newRequestQueue(this);
-        String url = "https://www.googleapis.com/customsearch/v1?key=AIzaSyBuwIMBG5YjqxxkDsQEjz-el2xHw15RfFQ&cx=015559890765402091894:0yoxulceyae&q="+ searchTerm;
-
-        //request a string response from provided URL
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null,
-                new Response.Listener<JSONObject>(){
-            @Override
-            public void onResponse(JSONObject response) {
-                //display the first 500 characters of the response string.
-                String temp = "Response is: " + response.toString();
-                resultTextView.setText(temp);
-                returnString = temp;
-            }
-
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error){
-                String temp2 = "didn't work!";
-                resultTextView.setText(temp2);
-            }
-        });
-
-        queue.add(jsonObjectRequest);
-    }
-
-    /** Called when the activity is first created. */
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_movie_lookup);
 
-        eText = (EditText) findViewById(R.id.editTextInput);
-        btn = (Button) findViewById(R.id.button1);
-        resultTextView = (TextView) findViewById(R.id.textView1);
-        //set textview as scrollable
-        resultTextView.setMovementMethod(new ScrollingMovementMethod());
+        playButton = (Button) findViewById(R.id.playButton);
 
-        // button onClick
-        btn.setOnClickListener(new View.OnClickListener() {
+        playButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-
-                final String searchString = eText.getText().toString();
-
-                //resultTextView.setText("Searching for : " + searchString);
-                //onSearchClick(v);
-
-                //call to custom search
-                googleSearch();
-
+                onPlayClick(v);
             }
         });
-
     }
 
-    public void onSearchClick(View v)
+
+    public void onPlayClick(View v)
     {
-        try {
-            Intent intent = new Intent(Intent.ACTION_WEB_SEARCH);
-            String term = eText.getText().toString();
-            intent.putExtra(SearchManager.QUERY, term);
-            startActivity(intent);
-        } catch (Exception e) {
-            // TODO: handle exception
-        }
+        Intent intent = new Intent(this, VoiceInput.class);
+        startActivity(intent);
 
     }
-
-
-
 }
 
 

@@ -3,33 +3,18 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:orientation="vertical">
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     android:orientation="vertical"
 
-    >
-
-    <EditText
-        android:id="@+id/editTextInput"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Enter search text" />
-
     <Button
-        android:id="@+id/button1"
+        android:id="@+id/playButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/editTextInput"
-        android:text="Search">
-
-
-    </Button>
-
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/button1"
-        android:text="Results"
-        android:maxLines = "5000"
-        android:scrollbars = "vertical"/>
-
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:text="Play" />
 </RelativeLayout>
