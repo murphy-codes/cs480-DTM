@@ -1,5 +1,6 @@
 package com.example.tmx42.omdb_api;
 
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -7,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -16,6 +18,7 @@ import org.json.JSONObject;
 import org.json.JSONTokener;
 
 import java.io.BufferedReader;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -32,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     //Base URL of our API call
     static final String API_URL = "http://www.omdbapi.com/?";
     //If you're reusing our code, please use your own API key.
-    static final String API_KEY = "apikey=########";
+    String API_KEY;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +48,10 @@ public class MainActivity extends AppCompatActivity {
         results = (TextView) findViewById(R.id.textViewResults);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
+        //grab the API key from secret.xml
+        String omdb_api_key = getString(R.string.OMDB_API_Key);
+        API_KEY = "apikey=" + omdb_api_key;
+
         submit = (Button) findViewById(R.id.buttonSubmit);
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,6 +61,16 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    public static Drawable LoadImageFromWebOperations(String url) {
+        try {
+            InputStream is = (InputStream) new URL(url).getContent();
+            Drawable d = Drawable.createFromStream(is, "srcName");
+            return d;
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     public boolean validateInput() {
@@ -123,9 +140,7 @@ public class MainActivity extends AppCompatActivity {
 
         private Exception exception;
 
-        protected void onPreExecute() {
-            progressBar.setVisibility(View.VISIBLE);
-        }
+        protected void onPreExecute() { progressBar.setVisibility(View.VISIBLE); }
 
         protected String doInBackground(Void... urls) {
 
@@ -184,22 +199,11 @@ public class MainActivity extends AppCompatActivity {
                     String country = movieObject.getString("Country");
                     String awards = movieObject.getString("Awards");
                     String poster = movieObject.getString("Poster");
-                      //String ratings = movieObject.getString("Ratings");
-                      //String r0 = movieObject.getString("0");
-                      //String r1 = movieObject.getString("1");
-                      //String r2 = movieObject.getString("2");
-                    String metascore = movieObject.getString("Metascore");
-                    String imdbRating = movieObject.getString("imdbRating");
-                    String imdbVotes = movieObject.getString("imdbVotes");
                     String imdbID = movieObject.getString("imdbID");
                     String type = movieObject.getString("Type");
-                    String DVD = movieObject.getString("DVD");
-                    String boxOffice = movieObject.getString("BoxOffice");
-                    String production = movieObject.getString("Production");
-                    String website = movieObject.getString("Website");
                     String responseTF = movieObject.getString("Response");
 
-                    results.setText("Title: " + title + "\n" +
+                    String cleanerText = "Title: " + title + "\n" +
                             "Year: " + year + "\n" +
                             "Rated: " + rated + "\n" +
                             "Released: " + released + "\n" +
@@ -211,20 +215,19 @@ public class MainActivity extends AppCompatActivity {
                             "Language: " + language + "\n" +
                             "Country: " + country + "\n" +
                             "Awards: " + awards + "\n" +
-                            "Poster: " + poster + "\n" +
-                            "Metascore: " + metascore + "\n" +
-                            "imdbRating: " + imdbRating + "\n" +
-                            "imdbVotes: " + imdbVotes + "\n" +
                             "imdbID: " + imdbID + "\n" +
                             "Type: " + type + "\n" +
-                            "DVD release date: " + DVD + "\n" +
-                            "Box Office: " + boxOffice + "\n" +
-                            "Production: " + production + "\n" +
-                            "Website: " + website + "\n" +
-                            "Response: " + responseTF);
+                            "Response: " + responseTF;
+                    results.setText(cleanerText);
+
+                    //"Poster: " + poster + "\n" +
+                    //ImageView posterIMG = (ImageView) findViewById(R.id.imageViewPoster);
+                    //posterIMG.setImageDrawable(LoadImageFromWebOperations(poster));
+                    //posterIMG.setVisibility(View.VISIBLE);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    //results.setText("Movie not found, please try again!");
                 }
         }
     }
