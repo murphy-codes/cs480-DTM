@@ -47,14 +47,14 @@ public class MainActivity extends AppCompatActivity {
 
     //saved values from search in GSON format
     public class MovieObject {
-        private Array title;
+        private String[] title;
         private String description;
         private String genre;
         private String directed_by;
         private String keywords;
         private String runtime;
 
-        public Array getTitle() {
+        public String[] getTitle() {
             return this.title;
         }
 
@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(JSONObject response) {
                 //display the first 500 characters of the response string.
-                String jsonString = "Response is: " + response.toString();
+                String jsonString = response.toString();
                 resultTextView.setText(jsonString);
 
 
@@ -94,19 +94,20 @@ public class MainActivity extends AppCompatActivity {
                 MovieObject movieObject = gson.fromJson(jsonString, MovieObject.class);
 
                 //get a value from our new movieObject, see if its valid
-                Array titlesArray = movieObject.getTitle();
+                String[] titles = movieObject.getTitle();
                 String theDescription = movieObject.getDescription();
 
 
+                Toast.makeText(getApplicationContext(), titles[0],
+                        Toast.LENGTH_SHORT).show();
 
-                //save our JSON object as a map - one option.
-                JSONObject resultsObject = new JSONObject((Map) response);
+                Toast.makeText(getApplicationContext(), theDescription,
+                        Toast.LENGTH_SHORT).show();
 
-                //we'll need to walk the map , possibly with a fore each?
 
                 //catch some strings, store in an unordered map.
-                try {
-                    String title = resultsObject.getString("Title");
+                /*try {
+                    String title = resultsObject.getString("title");
                     resultsSearch.put("title", title);
                     String description = resultsObject.getString("description");
                     resultsSearch.put("description", description);
@@ -126,6 +127,7 @@ public class MainActivity extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                */
 
 
             }
