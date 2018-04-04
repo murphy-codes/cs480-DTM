@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    The following article helped me make my layout prettier :
+    https://www.androidauthority.com/use-remote-web-api-within-android-app-617869/
+    Particularly in regards to the hint, and visibility options.
+    -->
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.tmx42.omdb_api.MainActivity">
+
+    <TableLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/tableLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:shrinkColumns="*"
+        android:stretchColumns="*">
+
+        <TableRow
+            android:id="@+id/row_1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="2dp">
+
+            <EditText
+                android:id="@+id/editTextTitle"
+                android:layout_width="273dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textShortMessage"
+                android:text=""
+                android:hint=" Enter Movie Title"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="2dp"
+                tools:layout_editor_absoluteX="32dp"
+                tools:layout_editor_absoluteY="16dp" />
+
+            <EditText
+                android:id="@+id/editTextYear"
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="numberSigned"
+                android:text=""
+                android:hint=" Year"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="2dp"
+                tools:layout_editor_absoluteX="262dp"
+                tools:layout_editor_absoluteY="16dp" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/row_2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="2dp">
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:indeterminate="true"
+                android:layout_centerHorizontal="true"
+                android:visibility="gone" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/row_3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="2dp">
+
+            <TextView
+                android:id="@+id/textViewMessage"
+                android:layout_width="275dp"
+                android:layout_height="38dp"
+                android:text=""
+                android:textAlignment="center"
+                android:textColor="#738cb5"
+                tools:layout_editor_absoluteX="57dp"
+                tools:layout_editor_absoluteY="89dp" />
+            <Button
+                android:id="@+id/buttonSubmit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Search"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="2dp"
+                style="@style/Base.Widget.AppCompat.Button.Borderless"
+                tools:layout_editor_absoluteX="262dp"
+                tools:layout_editor_absoluteY="16dp" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/row_4"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="2dp">
+
+            <TextView
+                android:id="@+id/textViewResults"
+                android:layout_width="278dp"
+                android:layout_height="300dp"
+                android:text=""
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHorizontal_bias="0.512"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.729" />
+        </TableRow>
+    </TableLayout>
+
+</android.support.constraint.ConstraintLayout>
