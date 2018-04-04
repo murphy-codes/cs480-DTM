@@ -3,14 +3,9 @@ package com.kinne.jack.websearchapi;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.text.method.ScrollingMovementMethod;
 import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -21,29 +16,24 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Array;
 import java.util.HashMap;
-import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
+    //ui
     EditText eText;
     Button btn;
     TextView resultTextView;
 
-    String searchTerm = "matrix";
-    String inputString;
+    //api key
+    String search_api_key;
 
-    //saved values from our search
-    private HashMap<String,String> resultsSearch;
 
     //saved values from search in GSON format
     public class MovieObject {
@@ -75,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
         RequestQueue queue = Volley.newRequestQueue(this);
 
         //grab the API key from secret.xml
-        String url = "https://www.googleapis.com/customsearch/v1?key=" + inputString + "&cx=015559890765402091894:0yoxulceyae&q="+ searchTerm;
+        String url = "https://www.googleapis.com/customsearch/v1?key=" + search_api_key + "&cx=015559890765402091894:0yoxulceyae&q="+ searchTerm;
 
         //request a string response from provided URL
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null,
@@ -87,6 +77,9 @@ public class MainActivity extends AppCompatActivity {
                 resultTextView.setText(jsonString);
 
 
+
+                //option three:
+                // https://www.tutorialspoint.com/android/android_json_parser.htm
 
                 //second option: GSON.  make a movieObject from our defined class.
                 GsonBuilder gsonBuilder = new GsonBuilder();
@@ -157,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
 
         //api key
         String google_search_api_key = getString(R.string.google_search_api_key);
-        inputString = google_search_api_key;
+        search_api_key = google_search_api_key;
 
         // button onClick
         btn.setOnClickListener(new View.OnClickListener() {
