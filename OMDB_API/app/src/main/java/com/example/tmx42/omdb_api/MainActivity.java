@@ -1,5 +1,7 @@
 package com.example.tmx42.omdb_api;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -18,9 +20,11 @@ import org.json.JSONObject;
 import org.json.JSONTokener;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 
 public class MainActivity extends AppCompatActivity {
@@ -31,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
     TextView message;
     Button submit;
     TextView results;
+    ImageView posterIMG;
+    String posterURL;
 
     //Base URL of our API call
     static final String API_URL = "http://www.omdbapi.com/?";
@@ -52,6 +58,8 @@ public class MainActivity extends AppCompatActivity {
         String omdb_api_key = getString(R.string.OMDB_API_Key);
         API_KEY = "apikey=" + omdb_api_key;
 
+        posterIMG = (ImageView) findViewById(R.id.imageViewPoster);
+
         submit = (Button) findViewById(R.id.buttonSubmit);
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,16 +69,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-    }
-
-    public static Drawable LoadImageFromWebOperations(String url) {
-        try {
-            InputStream is = (InputStream) new URL(url).getContent();
-            Drawable d = Drawable.createFromStream(is, "srcName");
-            return d;
-        } catch (Exception e) {
-            return null;
-        }
     }
 
     public boolean validateInput() {
@@ -137,6 +135,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     class RetrieveFeedTask extends AsyncTask<Void, Void, String> {
+        //This class is adapted from code presented by Obaro Ogbo of AndroidAuthority
+          //https://www.androidauthority.com/use-remote-web-api-within-android-app-617869/
 
         private Exception exception;
 
@@ -180,10 +180,6 @@ public class MainActivity extends AppCompatActivity {
             // TODO: do something with the feed
 
                 try {
-                    //JSONObject object = (JSONObject) new JSONTokener(response).nextValue();
-                      //String requestID = object.getString("requestId");
-                      //int likelihood = object.getInt("likelihood");
-                      //JSONArray photos = object.getJSONArray("photos");
                     JSONObject movieObject = new JSONObject(response);
                     String title = movieObject.getString("Title");
                     String year = movieObject.getString("Year");
@@ -210,6 +206,7 @@ public class MainActivity extends AppCompatActivity {
                             "Runtime: " + runtime + "\n" +
                             "Genre: " + genre + "\n" +
                             "Director: " + director + "\n" +
+                            "Writer: " + writer + "\n" +
                             "Actors: " + actors + "\n" +
                             "Plot: " + plot + "\n" +
                             "Language: " + language + "\n" +
@@ -220,15 +217,40 @@ public class MainActivity extends AppCompatActivity {
                             "Response: " + responseTF;
                     results.setText(cleanerText);
 
-                    //"Poster: " + poster + "\n" +
-                    //ImageView posterIMG = (ImageView) findViewById(R.id.imageViewPoster);
-                    //posterIMG.setImageDrawable(LoadImageFromWebOperations(poster));
-                    //posterIMG.setVisibility(View.VISIBLE);
+                    posterURL = poster;
+                    new DownloadImageTask(posterIMG).execute();
+                    posterIMG.setVisibility(View.VISIBLE);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    //results.setText("Movie not found, please try again!");
+                    results.setText("Movie not found, please try again!");
                 }
+        }
+    }
+
+    class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+        //This class is adapted from code presented by user Satheeshkumar Somu via stackoverflow
+          //https://stackoverflow.com/a/34354709
+        ImageView posterIMG;
+
+        public DownloadImageTask(ImageView posterIMG) {
+            this.posterIMG = posterIMG;
+        }
+
+        protected Bitmap doInBackground(String... urls) {
+            Bitmap mIcon11 = null;
+            try {
+                InputStream in = new java.net.URL(posterURL).openStream();
+                mIcon11 = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+            return mIcon11;
+        }
+
+        protected void onPostExecute(Bitmap result) {
+            posterIMG.setImageBitmap(result);
         }
     }
 }
