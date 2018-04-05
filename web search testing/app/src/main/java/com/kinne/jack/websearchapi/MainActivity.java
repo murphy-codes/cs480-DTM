@@ -1,5 +1,4 @@
 package com.kinne.jack.websearchapi;
-//Main Activity will launch and display a"Play" button to launch other activities.
 
 import android.app.SearchManager;
 import android.content.Intent;
@@ -34,7 +33,6 @@ public class MainActivity extends AppCompatActivity {
 
     //api key
     String search_api_key;
-
 
 
     //saved values from search in GSON format
@@ -140,16 +138,15 @@ public class MainActivity extends AppCompatActivity {
 
     /** Called when the activity is first created. */
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        playButton = (Button) findViewById(R.id.playButton);
-
-
-        playButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                onPlayClick(v);
+        eText = (EditText) findViewById(R.id.editTextInput);
+        btn = (Button) findViewById(R.id.button1);
+        resultTextView = (TextView) findViewById(R.id.textView1);
+        //set textview as scrollable
+        resultTextView.setMovementMethod(new ScrollingMovementMethod());
 
         //api key
         String google_search_api_key = getString(R.string.google_search_api_key);
@@ -169,19 +166,27 @@ public class MainActivity extends AppCompatActivity {
                 //call to custom search
                 googleSearch(searchString);
 
-
             }
         });
-    }
 
+    }
 
     //create a google search call, but send the user to a google browser window.
     public void onSearchClick(View v)
     {
-        Intent intent = new Intent(this, VoiceInput.class);
-        startActivity(intent);
+        try {
+            Intent intent = new Intent(Intent.ACTION_WEB_SEARCH);
+            String term = eText.getText().toString();
+            intent.putExtra(SearchManager.QUERY, term);
+            startActivity(intent);
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
 
     }
+
+
+
 }
 
 
