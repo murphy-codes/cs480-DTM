@@ -4,7 +4,6 @@ import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,12 +16,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -33,7 +30,6 @@ public class MainActivity extends AppCompatActivity {
 
     //api key
     String search_api_key;
-
 
     //saved values from search in GSON format
     public class MovieObject {
@@ -53,7 +49,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
-
 
     //send a RESTful request for google custom search
     void googleSearch(String searchTerm ) {
@@ -76,53 +71,22 @@ public class MainActivity extends AppCompatActivity {
                 String jsonString = response.toString();
                 resultTextView.setText(jsonString);
 
+                //here we do our work to convert to a json array, then walk it and grab the titles.
+                try {
+                    //convert json object into json_array.
+                    JSONArray responseArray = response.getJSONArray("items");
 
+                    //loop through contacts
+                    for(int i = 0 ; i < responseArray.length(); i++){
+                        JSONObject c = responseArray.getJSONObject(i);
+                        String titleString = c.getString("title");
 
-                //option three:
-                // https://www.tutorialspoint.com/android/android_json_parser.htm
-
-                //second option: GSON.  make a movieObject from our defined class.
-                GsonBuilder gsonBuilder = new GsonBuilder();
-                Gson gson = gsonBuilder.create();
-                MovieObject movieObject = gson.fromJson(jsonString, MovieObject.class);
-
-                //get a value from our new movieObject, see if its valid
-                String[] titles = movieObject.getTitle();
-                String theDescription = movieObject.getDescription();
-
-
-                Toast.makeText(getApplicationContext(), titles[0],
-                        Toast.LENGTH_SHORT).show();
-
-                Toast.makeText(getApplicationContext(), theDescription,
-                        Toast.LENGTH_SHORT).show();
-
-
-                //catch some strings, store in an unordered map.
-                /*try {
-                    String title = resultsObject.getString("title");
-                    resultsSearch.put("title", title);
-                    String description = resultsObject.getString("description");
-                    resultsSearch.put("description", description);
-                    //keywords
-                    //genre
-                    //release_date
-                    //runtime
-                    //person  ..  [name]
-                    //directed_by
-
-                    Toast.makeText(getApplicationContext(), title,
-                            Toast.LENGTH_SHORT).show();
-
-                    Toast.makeText(getApplicationContext(), description,
-                            Toast.LENGTH_SHORT).show();
-
+                        Toast.makeText(getApplicationContext(), titleString,
+                                Toast.LENGTH_SHORT).show();
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                */
-
-
             }
 
         }, new Response.ErrorListener() {
@@ -146,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
         btn = (Button) findViewById(R.id.button1);
         resultTextView = (TextView) findViewById(R.id.textView1);
         //set textview as scrollable
-        resultTextView.setMovementMethod(new ScrollingMovementMethod());
+        //resultTextView.setMovementMethod(new ScrollingMovementMethod());
 
         //api key
         String google_search_api_key = getString(R.string.google_search_api_key);
@@ -165,10 +129,8 @@ public class MainActivity extends AppCompatActivity {
 
                 //call to custom search
                 googleSearch(searchString);
-
             }
         });
-
     }
 
     //create a google search call, but send the user to a google browser window.
@@ -182,10 +144,7 @@ public class MainActivity extends AppCompatActivity {
         } catch (Exception e) {
             // TODO: handle exception
         }
-
     }
-
-
 
 }
 
