@@ -21,8 +21,19 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
+
 public class MainActivity extends AppCompatActivity {
 
+    instancedGoogleResults test;
+
+
+    public class GoogleResults {
+        //save our results
+        public ArrayList<String> arrayTitleResults = new ArrayList<String>();
+    }
     //ui
     EditText eText;
     Button btn;
@@ -31,33 +42,12 @@ public class MainActivity extends AppCompatActivity {
     //api key
     String search_api_key;
 
-    //saved values from search in GSON format
-    public class MovieObject {
-        private String[] title;
-        private String description;
-        private String genre;
-        private String directed_by;
-        private String keywords;
-        private String runtime;
-
-        public String[] getTitle() {
-            return this.title;
-        }
-
-        public String getDescription() {
-            return this.description;
-        }
-
-    }
-
     //send a RESTful request for google custom search
     void googleSearch(String searchTerm ) {
-
-        //hashmap return
-        //final HashMap <String,String> resultsSearch = new HashMap<String,String>();
-
         //instance the requestQueue
         RequestQueue queue = Volley.newRequestQueue(this);
+
+
 
         //grab the API key from secret.xml
         String url = "https://www.googleapis.com/customsearch/v1?key=" + search_api_key + "&cx=015559890765402091894:0yoxulceyae&q="+ searchTerm;
@@ -76,10 +66,17 @@ public class MainActivity extends AppCompatActivity {
                     //convert json object into json_array.
                     JSONArray responseArray = response.getJSONArray("items");
 
+                    //instance the results we want to return.
+                    GoogleResults instancedGoogleResults = new GoogleResults();
+
                     //loop through contacts
                     for(int i = 0 ; i < responseArray.length(); i++){
+                        //convert object from the array one by one back into a single json object
                         JSONObject c = responseArray.getJSONObject(i);
+
+                        //save our results; pushing the strings onto our array list
                         String titleString = c.getString("title");
+                        instancedGoogleResults.arrayTitleResults.add(0, titleString );
 
                         Toast.makeText(getApplicationContext(), titleString,
                                 Toast.LENGTH_SHORT).show();
@@ -109,14 +106,15 @@ public class MainActivity extends AppCompatActivity {
         eText = (EditText) findViewById(R.id.editTextInput);
         btn = (Button) findViewById(R.id.button1);
         resultTextView = (TextView) findViewById(R.id.textView1);
-        //set textview as scrollable
+
+        //set textview as scrollable.  not currently used.
         //resultTextView.setMovementMethod(new ScrollingMovementMethod());
 
         //api key
         String google_search_api_key = getString(R.string.google_search_api_key);
         search_api_key = google_search_api_key;
 
-        // button onClick
+        // button onClick to begin our search
         btn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
@@ -124,16 +122,20 @@ public class MainActivity extends AppCompatActivity {
 
                 resultTextView.setText("Searching for : " + searchString);
 
-                //call to google window search
-                //onSearchClick(v);
-
                 //call to custom search
                 googleSearch(searchString);
+
+                //show our results
+                String showtitle = instancedGoogleResults.arrayTitleResults.get(0);
+                resultTextView.setText(showtitle);
+
             }
         });
     }
 
+    //not used in this project
     //create a google search call, but send the user to a google browser window.
+    /*
     public void onSearchClick(View v)
     {
         try {
@@ -142,10 +144,10 @@ public class MainActivity extends AppCompatActivity {
             intent.putExtra(SearchManager.QUERY, term);
             startActivity(intent);
         } catch (Exception e) {
-            // TODO: handle exception
+         //
         }
     }
-
+    */
 }
 
 
