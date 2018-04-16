@@ -60,9 +60,9 @@
         android:id="@+id/guesstextview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_above="@+id/clueonebutton"
         android:layout_alignStart="@+id/clueonebutton"
-        android:layout_marginTop="14dp"
+        android:layout_marginBottom="14dp"
         android:text="When you think you have it, guess, and then hit submit! " />
 
     <Button
@@ -114,4 +114,13 @@
         android:text="Clue # 6"
         android:background="#ffffd000"
         android:fontFamily="sans-serif"/>
+
+    <TextView
+        android:id="@+id/displaytextview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/guesstextview"
+        android:layout_alignStart="@+id/guesstextview"
+        android:text="" />
+
 </RelativeLayout>

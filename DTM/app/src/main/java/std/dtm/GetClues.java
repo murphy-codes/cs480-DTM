@@ -66,14 +66,41 @@ public class GetClues extends AppCompatActivity {
     static final String API_URL = "http://www.omdbapi.com/?";
     //If you're reusing our code, please use your own API key.
     private String omdb_api_key;
+    //display username and bank balance
+    private TextView displayTextView;
+    //displays current size of prize pool
+    private TextView prizeTextView;
+
+    public static int clueOneValue = 100;
+    public static int clueTwoValue = 75;
+    public static int clueThreeValue = 50;
+    public static int clueFourValue = 25;
+    public static int clueFiveValue = 10;
+    public static int clueSixValue = 5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_get_clues);
 
+        guessTextView = (TextView) findViewById(R.id.guesstextview);
+        displayTextView = (TextView) findViewById(R.id.displaytextview);
+
+
+        displayTextView.setText(MainActivity.user.getDisplayString());
+
         //initially we want the first movie result from google
         movieGuessIter=0;
+
+        //if freeplay enabled, disable cost
+        if(MainActivity.settings.isFreePlaySet()){
+            clueOneValue = 0;
+            clueTwoValue = 0;
+            clueThreeValue = 0;
+            clueFourValue = 0;
+            clueFiveValue = 0;
+            clueSixValue = 0;
+        }
 
         //api keys
         omdb_api_key = "&apikey="+getString(R.string.omdb_search_api_key);
@@ -88,10 +115,10 @@ public class GetClues extends AppCompatActivity {
         //userInput is initially empty, so submitting will be giving up when empty, and guessing when not empty
         userInput = "";
 
+        //find buttons
         nextMovieButton = (Button) findViewById(R.id.nextmoviebutton);
         submitButton = (Button) findViewById(R.id.submitbutton);
         guessButton = (Button) findViewById(R.id.guessmoviebutton);
-
         clueOneButton = (Button) findViewById(R.id.clueonebutton);
         clueTwoButton = (Button) findViewById(R.id.cluetwobutton);
         clueThreeButton = (Button) findViewById(R.id.cluethreebutton);
@@ -99,6 +126,7 @@ public class GetClues extends AppCompatActivity {
         clueFiveButton = (Button) findViewById(R.id.cluefivebutton);
         clueSixButton = (Button) findViewById(R.id.cluesixbutton);
 
+        //disable clue buttons until their textviews have content
         clueOneButton.setEnabled(false);
         clueTwoButton.setEnabled(false);
         clueThreeButton.setEnabled(false);
@@ -106,8 +134,14 @@ public class GetClues extends AppCompatActivity {
         clueFiveButton.setEnabled(false);
         clueSixButton.setEnabled(false);
 
-        guessTextView = (TextView) findViewById(R.id.guesstextview);
+        clueOneButton.setText("Summary $"+clueOneValue);
+        clueTwoButton.setText("Cast $"+clueTwoValue);
+        clueThreeButton.setText("Writer/Director $"+clueThreeValue);
+        clueFourButton.setText("Production/Release $"+clueFourValue);
+        clueFiveButton.setText("Genre/Rating $"+clueFiveValue);
+        clueSixButton.setText("Awards $"+clueSixValue);
 
+        //set onclick Listeners for buttons
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -118,37 +152,61 @@ public class GetClues extends AppCompatActivity {
         clueOneButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(!MainActivity.settings.isFreePlaySet()){
+                    clueOneButton.setEnabled(false);
+                }
                 presentClue("1");
+                displayTextView.setText(MainActivity.user.getDisplayString());
             }
         });
         clueTwoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(!MainActivity.settings.isFreePlaySet()){
+                    clueTwoButton.setEnabled(false);
+                }
                 presentClue("2");
+                displayTextView.setText(MainActivity.user.getDisplayString());
             }
         });
         clueThreeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(!MainActivity.settings.isFreePlaySet()){
+                    clueThreeButton.setEnabled(false);
+                }
                 presentClue("3");
+                displayTextView.setText(MainActivity.user.getDisplayString());
             }
         });
         clueFourButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(!MainActivity.settings.isFreePlaySet()){
+                    clueFourButton.setEnabled(false);
+                }
                 presentClue("4");
+                displayTextView.setText(MainActivity.user.getDisplayString());
             }
         });
         clueFiveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(!MainActivity.settings.isFreePlaySet()){
+                    clueFiveButton.setEnabled(false);
+                }
                 presentClue("5");
+                displayTextView.setText(MainActivity.user.getDisplayString());
             }
         });
         clueSixButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(!MainActivity.settings.isFreePlaySet()){
+                    clueSixButton.setEnabled(false);
+                }
                 presentClue("6");
+                displayTextView.setText(MainActivity.user.getDisplayString());
             }
         });
 
@@ -162,12 +220,6 @@ public class GetClues extends AppCompatActivity {
         nextMovieButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                clueOneButton.setEnabled(false);
-                clueTwoButton.setEnabled(false);
-                clueThreeButton.setEnabled(false);
-                clueFourButton.setEnabled(false);
-                clueFiveButton.setEnabled(false);
-                clueSixButton.setEnabled(false);
                 runOmdbApi();
             }
         });
@@ -242,30 +294,12 @@ public class GetClues extends AppCompatActivity {
                         try {
                             //convert json object into json_array.
                             responseArray = response.getJSONArray("items");
-
+                            //get imdb information with current top result from google search
                             runOmdbApi();
-                           // String summary = jsonobj.getString("snippet");
-                            //GoogleResult result = new GoogleResult(title, summary, "","","","");
-
-                            //Toast.makeText(getApplicationContext(), result.getSummary(), Toast.LENGTH_SHORT).show();
-
-                            /*loop through contacts
-                            for(int i = 0 ; i < responseArray.length(); i++){
-                                //convert object from the array one by one back into a single json object
-                                JSONObject c = responseArray.getJSONObject(i);
-
-                                //save our results; pushing the strings onto our array list
-                                String titleString = c.getString("title");
-                                instancedGoogleResults.arrayTitleResults.add(0, titleString );
-
-                                Toast.makeText(getApplicationContext(), titleString,
-                                        Toast.LENGTH_SHORT).show();
-                            }*/
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
                     }
-
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error){
@@ -278,6 +312,13 @@ public class GetClues extends AppCompatActivity {
     }
 
     void runOmdbApi() {
+        //disable buttons while changing the text for each clue
+        clueOneButton.setEnabled(false);
+        clueTwoButton.setEnabled(false);
+        clueThreeButton.setEnabled(false);
+        clueFourButton.setEnabled(false);
+        clueFiveButton.setEnabled(false);
+        clueSixButton.setEnabled(false);
         try{
             //instance the results we want to return.
             JSONObject jsonobj = responseArray.getJSONObject(movieGuessIter);

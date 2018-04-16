@@ -35,6 +35,8 @@ public class AskQuestion extends AppCompatActivity {
     private String userInput;
     //path to message variable
     public static final String EXTRA_MESSAGE = "std.dtm.MESSAGE";
+    //displays username and bank account
+    private TextView displayTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +46,9 @@ public class AskQuestion extends AppCompatActivity {
         micButton = (Button) findViewById(R.id.micbutton);
         dtmButton = (Button) findViewById(R.id.dtmbutton);
         askTextView = (TextView) findViewById(R.id.asktextview);
+        displayTextView = (TextView) findViewById(R.id.displaytextview);
+
+        displayTextView.setText(MainActivity.user.getDisplayString());
 
         //initially userInput is empty, so we know not to launch dtm until user asks a question
         userInput = "";

@@ -22,6 +22,9 @@ public class GetAnswer extends AppCompatActivity {
     private String guess;
     private String displayResultString;
     private TextView answerTextView;
+    //points to be earned if game is won
+    private int earned=100;
+    private TextView displayTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,15 +38,19 @@ public class GetAnswer extends AppCompatActivity {
         String answer = GetClues.currentMovie.getTitle();
 
         answerTextView = (TextView) findViewById(R.id.answerTextview);
+        displayTextView = (TextView) findViewById(R.id.displaytextview);
 
         //if the guess string is contained in the answer string, and is at least one fourth the length of the answer, you are correct
         if(guess.isEmpty()){
             displayResultString = "Too bad you gave up!\n The answer is: "+answer;
         } else if(answer.toLowerCase().contains(guess.toLowerCase()) && guess.length() > answer.length() /4){
-            displayResultString = "YOU WON!\nIt was "+answer+"!!!";
+            displayResultString = "YOU WON!\nIt was "+answer+"!!!\nYou earned $"+earned;
+            MainActivity.user.addBalance(earned);
         } else {
             displayResultString = "Oh, actually we thought it was "+answer+".";
         }
+
+        //displayTextView.setText(MainActivity.user.getDisplayString());
 
         answerTextView.setText(displayResultString);
 

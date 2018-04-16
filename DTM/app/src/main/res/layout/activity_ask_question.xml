@@ -38,4 +38,13 @@
         android:layout_marginTop="33dp"
         android:text="Ask a question, then hit DTM"
         android:textAlignment="center" />
+
+    <TextView
+        android:id="@+id/displaytextview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="14dp"
+        android:text="" />
 </RelativeLayout>
