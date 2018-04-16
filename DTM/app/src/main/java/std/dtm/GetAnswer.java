@@ -20,6 +20,7 @@ public class GetAnswer extends AppCompatActivity {
     //returns user to MainActivity
     private Button endButton;
     private String guess;
+    private String displayResultString;
     private TextView answerTextView;
 
     @Override
@@ -31,13 +32,20 @@ public class GetAnswer extends AppCompatActivity {
         Intent thisIntent = getIntent();
         guess = thisIntent.getStringExtra(EXTRA_MESSAGE);
 
+        String answer = GetClues.currentMovie.getTitle();
+
         answerTextView = (TextView) findViewById(R.id.answerTextview);
 
+        //if the guess string is contained in the answer string, and is at least one fourth the length of the answer, you are correct
         if(guess.isEmpty()){
-            guess = "Too bad you gave up!";
+            displayResultString = "Too bad you gave up!\n The answer is: "+answer;
+        } else if(answer.toLowerCase().contains(guess.toLowerCase()) && guess.length() > answer.length() /4){
+            displayResultString = "YOU WON!\nIt was "+answer+"!!!";
+        } else {
+            displayResultString = "Oh, actually we thought it was "+answer+".";
         }
 
-        answerTextView.setText(guess);
+        answerTextView.setText(displayResultString);
 
         endButton = (Button) findViewById(R.id.endbutton);
 

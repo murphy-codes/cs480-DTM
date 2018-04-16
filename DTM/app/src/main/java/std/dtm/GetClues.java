@@ -56,6 +56,10 @@ public class GetClues extends AppCompatActivity {
     private String userInput;
     private String searchFor;
     private String search_api_key;
+    //movieGuessiter is the array index of movie responses from google
+    private int movieGuessIter;
+    //responseArray stores google search results
+    private JSONArray responseArray;
     public static movieResult currentMovie;
     private final int REQ_CODE_SPEECH_INPUT = 99;
     //Base URL of our API call
@@ -67,6 +71,9 @@ public class GetClues extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_get_clues);
+
+        //initially we want the first movie result from google
+        movieGuessIter=0;
 
         //api keys
         omdb_api_key = "&apikey="+getString(R.string.omdb_search_api_key);
@@ -92,9 +99,14 @@ public class GetClues extends AppCompatActivity {
         clueFiveButton = (Button) findViewById(R.id.cluefivebutton);
         clueSixButton = (Button) findViewById(R.id.cluesixbutton);
 
-        guessTextView = (TextView) findViewById(R.id.guesstextview);
+        clueOneButton.setEnabled(false);
+        clueTwoButton.setEnabled(false);
+        clueThreeButton.setEnabled(false);
+        clueFourButton.setEnabled(false);
+        clueFiveButton.setEnabled(false);
+        clueSixButton.setEnabled(false);
 
-        //guessTextView.setText(searchTerm);
+        guessTextView = (TextView) findViewById(R.id.guesstextview);
 
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -144,6 +156,19 @@ public class GetClues extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 askSpeechInput();
+            }
+        });
+
+        nextMovieButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clueOneButton.setEnabled(false);
+                clueTwoButton.setEnabled(false);
+                clueThreeButton.setEnabled(false);
+                clueFourButton.setEnabled(false);
+                clueFiveButton.setEnabled(false);
+                clueSixButton.setEnabled(false);
+                runOmdbApi();
             }
         });
     }
@@ -201,8 +226,6 @@ public class GetClues extends AppCompatActivity {
         }
     }
 
-
-
     void googleSearch(String searchTerm ) {
         //instance the requestQueue
         RequestQueue queue = Volley.newRequestQueue(this);
@@ -218,26 +241,9 @@ public class GetClues extends AppCompatActivity {
                         //here we do our work to convert to a json array, then walk it and grab the titles.
                         try {
                             //convert json object into json_array.
-                            JSONArray responseArray = response.getJSONArray("items");
+                            responseArray = response.getJSONArray("items");
 
-                            //instance the results we want to return.
-                            JSONObject jsonobj = responseArray.getJSONObject(0);
-                            String movieTitle = jsonobj.getString("title");
-                            int movieTitleLength = movieTitle.length();
-                            String releaseYear = movieTitle.substring(movieTitleLength-12, movieTitleLength-8);
-                            movieTitle = movieTitle.substring(0, movieTitleLength-14);
-
-                            movieTitleLength = movieTitle.length();
-
-                            for (int i = 0; i <movieTitleLength; i++) {
-                                if (movieTitle.substring(i, i + 1).equals(" ")) {
-                                    movieTitle = movieTitle.substring(0, i) + '+' + movieTitle.substring(i + 1,movieTitleLength);
-                                }
-                            }
-                            //create our search string, w/ our apikey included & the movie title
-                            searchFor = API_URL + omdb_api_key + "&t=" + movieTitle  + "&y=" + releaseYear ;
-
-                            new RetrieveFeedTask().execute();
+                            runOmdbApi();
                            // String summary = jsonobj.getString("snippet");
                             //GoogleResult result = new GoogleResult(title, summary, "","","","");
 
@@ -269,6 +275,32 @@ public class GetClues extends AppCompatActivity {
         });
         //fire request
         queue.add(jsonObjectRequest);
+    }
+
+    void runOmdbApi() {
+        try{
+            //instance the results we want to return.
+            JSONObject jsonobj = responseArray.getJSONObject(movieGuessIter);
+            String movieTitle = jsonobj.getString("title");
+            int movieTitleLength = movieTitle.length();
+            String releaseYear = movieTitle.substring(movieTitleLength - 12, movieTitleLength - 8);
+            movieTitle = movieTitle.substring(0, movieTitleLength - 14);
+
+            movieTitleLength = movieTitle.length();
+
+            for (int i = 0; i < movieTitleLength; i++) {
+                if (movieTitle.substring(i, i + 1).equals(" ")) {
+                    movieTitle = movieTitle.substring(0, i) + '+' + movieTitle.substring(i + 1, movieTitleLength);
+                }
+            }
+            //create our search string, w/ our apikey included & the movie title
+            searchFor = API_URL + omdb_api_key + "&t=" + movieTitle + "&y=" + releaseYear;
+
+            new RetrieveFeedTask().execute();
+            movieGuessIter++;
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     class RetrieveFeedTask extends AsyncTask<Void, Void, String> {
@@ -329,6 +361,12 @@ public class GetClues extends AppCompatActivity {
 
                 //set the currentMovie to our omdb result
                 currentMovie = new movieResult(title, plot, writer, director, actors, genre,released, production, poster, awards, rated, runtime);
+                clueOneButton.setEnabled(true);
+                clueTwoButton.setEnabled(true);
+                clueThreeButton.setEnabled(true);
+                clueFourButton.setEnabled(true);
+                clueFiveButton.setEnabled(true);
+                clueSixButton.setEnabled(true);
 
             } catch (JSONException e) {
                 e.printStackTrace();
