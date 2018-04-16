@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="std.dtm.GetClues">
+
+    <Button
+        android:id="@+id/nextmoviebutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="39dp"
+        android:layout_marginTop="54dp"
+        android:width="80dp"
+        android:height="120dp"
+        android:text="I don't think this is my movie"
+        android:background="#ffffd000"
+        android:fontFamily="sans-serif"/>
+
+    <Button
+        android:id="@+id/submitbutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/nextmoviebutton"
+        android:layout_centerVertical="true"
+        android:width="80dp"
+        android:height="120dp"
+        android:text="Give up"
+        android:background="#ffffd000"
+        android:fontFamily="sans-serif"/>
+
+    <Button
+        android:id="@+id/guessmoviebutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/submitbutton"
+        android:layout_marginBottom="54dp"
+        android:width="80dp"
+        android:height="120dp"
+        android:text="guess"
+        android:background="#ffffd000"
+        android:fontFamily="sans-serif" />
+
+    <Button
+        android:id="@+id/clueonebutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/nextmoviebutton"
+        android:layout_marginStart="30dp"
+        android:background="#ffffd000"
+        android:fontFamily="sans-serif"
+        android:text="Clue #1" />
+
+    <TextView
+        android:id="@+id/guesstextview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/clueonebutton"
+        android:layout_marginTop="14dp"
+        android:text="When you think you have it, guess, and then hit submit! " />
+
+    <Button
+        android:id="@+id/cluetwobutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/nextmoviebutton"
+        android:layout_alignStart="@+id/clueonebutton"
+        android:text="Clue # 2"
+        android:background="#ffffd000"
+        android:fontFamily="sans-serif"/>
+
+    <Button
+        android:id="@+id/cluethreebutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/cluetwobutton"
+        android:layout_alignTop="@+id/submitbutton"
+        android:text="Clue # 3"
+        android:background="#ffffd000"
+        android:fontFamily="sans-serif"/>
+
+    <Button
+        android:id="@+id/cluefourbutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/submitbutton"
+        android:layout_alignStart="@+id/cluethreebutton"
+        android:text="Clue # 4"
+        android:background="#ffffd000"
+        android:fontFamily="sans-serif"/>
+
+    <Button
+        android:id="@+id/cluefivebutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/cluefourbutton"
+        android:layout_alignTop="@+id/guessmoviebutton"
+        android:text="Clue # 5"
+        android:background="#ffffd000"
+        android:fontFamily="sans-serif"/>
+
+    <Button
+        android:id="@+id/cluesixbutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/guessmoviebutton"
+        android:layout_alignStart="@+id/cluefivebutton"
+        android:text="Clue # 6"
+        android:background="#ffffd000"
+        android:fontFamily="sans-serif"/>
+</RelativeLayout>

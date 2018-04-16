@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="std.dtm.AskQuestion">
+
+    <Button
+        android:id="@+id/micbutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/dtmbutton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="45dp"
+        android:height="256dip"
+        android:text="Ask"
+        android:background="#ffffd000"
+        android:fontFamily="sans-serif"/>
+
+    <Button
+        android:id="@+id/dtmbutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/micbutton"
+        android:layout_marginBottom="20dp"
+        android:text="DTM"
+        android:background="#ffffd000"
+        android:fontFamily="sans-serif"/>
+
+    <TextView
+        android:id="@+id/asktextview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="33dp"
+        android:text="Ask a question, then hit DTM"
+        android:textAlignment="center" />
+</RelativeLayout>
