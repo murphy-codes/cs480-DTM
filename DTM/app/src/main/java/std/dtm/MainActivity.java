@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
     //Make new Permission request
     private void requestPermission() {
         // if permission not granted, show error.
-        if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.RECORD_AUDIO) ||
+        if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.RECORD_AUDIO) &&
                 ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.INTERNET) )
         {
             Toast.makeText(getApplicationContext(), "permission not granted!", Toast.LENGTH_LONG).show();

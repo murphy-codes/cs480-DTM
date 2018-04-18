@@ -126,8 +126,8 @@ public class MainActivity extends AppCompatActivity {
                 googleSearch(searchString);
 
                 //show our results
-                String showtitle = instancedGoogleResults.arrayTitleResults.get(0);
-                resultTextView.setText(showtitle);
+                //String showtitle = instancedGoogleResults.arrayTitleResults.get(0);
+                //resultTextView.setText(showtitle);
 
             }
         });
