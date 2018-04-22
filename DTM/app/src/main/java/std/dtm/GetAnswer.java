@@ -12,6 +12,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+//ad stuff
+import com.google.android.gms.ads.MobileAds;
 
 import static std.dtm.AskQuestion.EXTRA_MESSAGE;
 
@@ -25,6 +27,9 @@ public class GetAnswer extends AppCompatActivity {
     //points to be earned if game is won
     private int earned=100;
     private TextView displayTextView;
+
+    //ad stuff
+    private String admob_ad_unit_ID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +67,10 @@ public class GetAnswer extends AppCompatActivity {
                 goToMainMenu();
             }
         });
+
+        //ad stuff
+        admob_ad_unit_ID = "&apikey="+getString(R.string.admob_ad_unit_ID);
+        MobileAds.initialize(this, "admob_ad_unit_ID");
     }
 
     //clear activity stack and go to MainActivity
