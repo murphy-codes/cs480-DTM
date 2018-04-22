@@ -13,6 +13,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 //ad stuff
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 
 import static std.dtm.AskQuestion.EXTRA_MESSAGE;
@@ -29,7 +31,8 @@ public class GetAnswer extends AppCompatActivity {
     private TextView displayTextView;
 
     //ad stuff
-    private String admob_ad_unit_ID;
+    private String admob_app_ID;
+    private AdView mAdView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,8 +72,16 @@ public class GetAnswer extends AppCompatActivity {
         });
 
         //ad stuff
-        admob_ad_unit_ID = "&apikey="+getString(R.string.admob_ad_unit_ID);
-        MobileAds.initialize(this, "admob_ad_unit_ID");
+        //initilize the ads with our unit id.
+        admob_app_ID = getString(R.string.admob_app_ID);
+        MobileAds.initialize(this, admob_app_ID);
+        //populate the adspace with an ad.
+        mAdView = findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR) //TODO: this line to be removed for production release
+                .build();
+        mAdView.loadAd(adRequest);
+
     }
 
     //clear activity stack and go to MainActivity
