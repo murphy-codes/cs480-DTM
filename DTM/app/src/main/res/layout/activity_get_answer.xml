@@ -13,7 +13,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="26dp"
-        android:text="Return To Main Menu"
+        android:text="Another!"
         android:background="#ffffd000"
         android:fontFamily="sans-serif" />
 

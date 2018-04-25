@@ -52,8 +52,12 @@ public class GetAnswer extends AppCompatActivity {
         if(guess.isEmpty()){
             displayResultString = "Too bad you gave up!\n The answer is: "+answer;
         } else if(answer.toLowerCase().contains(guess.toLowerCase()) && guess.length() > answer.length() /4){
-            displayResultString = "YOU WON!\nIt was "+answer+"!!!\nYou earned $"+earned;
-            MainActivity.user.addBalance(earned);
+            displayResultString = "YOU WON!\nIt was "+answer+"!!!";
+            //If free play is not set, you win $100
+            if(!MainActivity.settings.isFreePlaySet()) {
+                MainActivity.user.addBalance(earned);
+                displayResultString += "\nYou earned $" + earned;
+            }
         } else {
             displayResultString = "Oh, actually we thought it was "+answer+".";
         }
@@ -86,7 +90,7 @@ public class GetAnswer extends AppCompatActivity {
 
     //clear activity stack and go to MainActivity
     private void goToMainMenu() {
-        final Intent intent = new Intent(this, MainActivity.class);
+        final Intent intent = new Intent(this, AskQuestion.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
