@@ -329,12 +329,13 @@ public class GetClues extends AppCompatActivity {
         try{
             //instance the results we want to return.
             JSONObject jsonobj = responseArray.getJSONObject(movieGuessIter);
-            String movieTitle = jsonobj.getString("title");
-            int movieTitleLength = movieTitle.length();
-            String releaseYear = movieTitle.substring(movieTitleLength - 12, movieTitleLength - 8);
-            movieTitle = movieTitle.substring(0, movieTitleLength - 14);
+            String gMovieTitle = jsonobj.getString("title");
+            //int movieTitleLength = movieTitle.length();
+            //String releaseYear = movieTitle.substring(movieTitleLength - 12, movieTitleLength - 8);
+            //movieTitle = movieTitle.substring(0, movieTitleLength - 14);
+            String movieTitle = validateTitle(gMovieTitle);
 
-            movieTitleLength = movieTitle.length();
+            int movieTitleLength = movieTitle.length();
 
             for (int i = 0; i < movieTitleLength; i++) {
                 if (movieTitle.substring(i, i + 1).equals(" ")) {
@@ -342,7 +343,8 @@ public class GetClues extends AppCompatActivity {
                 }
             }
             //create our search string, w/ our apikey included & the movie title
-            searchFor = API_URL + omdb_api_key + "&t=" + movieTitle + "&y=" + releaseYear;
+            //searchFor = API_URL + omdb_api_key + "&t=" + movieTitle + "&y=" + releaseYear; //keeping this here to re-implement release year
+            searchFor = API_URL + omdb_api_key + "&t=" + movieTitle;
 
             new RetrieveFeedTask().execute();
             movieGuessIter++;
@@ -420,6 +422,22 @@ public class GetClues extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
+    }
+
+    public static String validateTitle(String movieTitle) {
+        //clean our movie titles of everything after title
+        boolean keepSearching = true;
+        int i = 1;
+        int end = movieTitle.length();
+        boolean chop = false;
+        //search for parentheses after the 1st char
+        while (keepSearching) {
+            if (i >= end-1) { keepSearching = false; } else {
+                if (!movieTitle.substring(i, i + 1).equals("(")) { i++; } else { keepSearching = false; chop = true;}
+            }
+        }
+        if (chop) { movieTitle = movieTitle.substring(0, i-1); }
+        return movieTitle;
     }
 }
 
