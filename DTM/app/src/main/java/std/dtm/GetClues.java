@@ -277,6 +277,7 @@ public class GetClues extends AppCompatActivity {
                     guessTextView.setText("Current Guess: "+userInput);
                     //change submitButton text from "give up" to "submit" when an answer is provided
                     submitButton.setText("Submit");
+                    goToAnswer();
                 }
                 break;
             }

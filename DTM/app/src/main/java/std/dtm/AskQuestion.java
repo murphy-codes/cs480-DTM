@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +24,8 @@ import java.util.Locale;
 
 public class AskQuestion extends AppCompatActivity {
 
+    //settings button to change game settings
+    private ImageButton settingsButton;
     //micButton launches Intent to get voice input and turn into a string.
     private Button micButton;
     //dtmButton launches PresentClues
@@ -43,6 +46,7 @@ public class AskQuestion extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ask_question);
 
+        settingsButton = (ImageButton) findViewById(R.id.settingsbutton);
         micButton = (Button) findViewById(R.id.micbutton);
         dtmButton = (Button) findViewById(R.id.dtmbutton);
         askTextView = (TextView) findViewById(R.id.asktextview);
@@ -53,6 +57,12 @@ public class AskQuestion extends AppCompatActivity {
         //initially userInput is empty, so we know not to launch dtm until user asks a question
         userInput = "";
 
+        settingsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToSettings();
+            }
+        });
         micButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -78,6 +88,12 @@ public class AskQuestion extends AppCompatActivity {
             Toast.makeText(this, "you must first ask a question", Toast.LENGTH_SHORT).show();
         }
 
+    }
+
+    //launch settings
+    private void goToSettings(){
+        Intent settingsIntent = new Intent(this, Settings.class);
+        startActivity(settingsIntent);
     }
 
     //launches voice input activity
@@ -110,6 +126,7 @@ public class AskQuestion extends AppCompatActivity {
                     //set userInput, so we know we can launch DTM
                     userInput = result.get(0);
                     askTextView.setText(userInput);
+                    goToClues();
                 }
                 break;
             }
