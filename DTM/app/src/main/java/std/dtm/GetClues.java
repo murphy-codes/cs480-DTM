@@ -156,6 +156,7 @@ public class GetClues extends AppCompatActivity {
                     clueOneButton.setEnabled(false);
                 }
                 presentClue("1");
+                MainActivity.user.subtractBalance(clueOneValue);
                 displayTextView.setText(MainActivity.user.getDisplayString());
             }
         });
@@ -166,6 +167,7 @@ public class GetClues extends AppCompatActivity {
                     clueTwoButton.setEnabled(false);
                 }
                 presentClue("2");
+                MainActivity.user.subtractBalance(clueTwoValue);
                 displayTextView.setText(MainActivity.user.getDisplayString());
             }
         });
@@ -176,6 +178,7 @@ public class GetClues extends AppCompatActivity {
                     clueThreeButton.setEnabled(false);
                 }
                 presentClue("3");
+                MainActivity.user.subtractBalance(clueThreeValue);
                 displayTextView.setText(MainActivity.user.getDisplayString());
             }
         });
@@ -186,6 +189,7 @@ public class GetClues extends AppCompatActivity {
                     clueFourButton.setEnabled(false);
                 }
                 presentClue("4");
+                MainActivity.user.subtractBalance(clueFourValue);
                 displayTextView.setText(MainActivity.user.getDisplayString());
             }
         });
@@ -196,6 +200,7 @@ public class GetClues extends AppCompatActivity {
                     clueFiveButton.setEnabled(false);
                 }
                 presentClue("5");
+                MainActivity.user.subtractBalance(clueFiveValue);
                 displayTextView.setText(MainActivity.user.getDisplayString());
             }
         });
@@ -206,6 +211,7 @@ public class GetClues extends AppCompatActivity {
                     clueSixButton.setEnabled(false);
                 }
                 presentClue("6");
+                MainActivity.user.subtractBalance(clueSixValue);
                 displayTextView.setText(MainActivity.user.getDisplayString());
             }
         });
