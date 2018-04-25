@@ -36,6 +36,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Locale;
 
 import static std.dtm.AskQuestion.EXTRA_MESSAGE;
@@ -330,21 +331,25 @@ public class GetClues extends AppCompatActivity {
             //instance the results we want to return.
             JSONObject jsonobj = responseArray.getJSONObject(movieGuessIter);
             String gMovieTitle = jsonobj.getString("title");
-            //int movieTitleLength = movieTitle.length();
-            //String releaseYear = movieTitle.substring(movieTitleLength - 12, movieTitleLength - 8);
-            //movieTitle = movieTitle.substring(0, movieTitleLength - 14);
+            // validate our title and year before we search, just to be safe
+            String releaseYear = validateYear(gMovieTitle);
             String movieTitle = validateTitle(gMovieTitle);
 
             int movieTitleLength = movieTitle.length();
 
+            //replace spaces with '+' chars, for our OMDB api call
             for (int i = 0; i < movieTitleLength; i++) {
                 if (movieTitle.substring(i, i + 1).equals(" ")) {
                     movieTitle = movieTitle.substring(0, i) + '+' + movieTitle.substring(i + 1, movieTitleLength);
                 }
             }
-            //create our search string, w/ our apikey included & the movie title
-            //searchFor = API_URL + omdb_api_key + "&t=" + movieTitle + "&y=" + releaseYear; //keeping this here to re-implement release year
-            searchFor = API_URL + omdb_api_key + "&t=" + movieTitle;
+
+            //create our search string, w/ our apikey included & the movie title, if year exists & validate include it too
+            if(releaseYear == null){
+                searchFor = API_URL + omdb_api_key + "&t=" + movieTitle;
+            } else {
+                searchFor = API_URL + omdb_api_key + "&t=" + movieTitle + "&y=" + releaseYear;
+            }
 
             new RetrieveFeedTask().execute();
             movieGuessIter++;
@@ -430,7 +435,7 @@ public class GetClues extends AppCompatActivity {
         int i = 1;
         int end = movieTitle.length();
         boolean chop = false;
-        //search for parentheses after the 1st char
+        //search for parentheses after the 1st char (edge case)
         while (keepSearching) {
             if (i >= end-1) { keepSearching = false; } else {
                 if (!movieTitle.substring(i, i + 1).equals("(")) { i++; } else { keepSearching = false; chop = true;}
@@ -438,6 +443,35 @@ public class GetClues extends AppCompatActivity {
         }
         if (chop) { movieTitle = movieTitle.substring(0, i-1); }
         return movieTitle;
+    }
+
+    public static String validateYear(String movieYear) {
+        //pull the year out of our movie titles
+        boolean keepSearching = true;
+        int i = 1;
+        int end = movieYear.length();
+        boolean chop = false;
+        int start = 0;
+        int finish = 0;
+        //search for years w/i parentheses after the 1st char
+        while (keepSearching) {
+            if (i >= end) { keepSearching = false; } else {
+                if (movieYear.substring(i, i + 1).equals("(")) { start = i; chop = true; i++; } else if (movieYear.substring(i, i + 1).equals(")") && i != 4) { finish = i; keepSearching = false; } else { i++; }
+            }
+        }
+        if (chop) {
+            movieYear = movieYear.substring(start+1, finish);
+            /*
+                We suspect our Google search has returned a year within parentheses
+                We first rejects all input that are not a 4-digit number
+                We then narrow down the year to between 1888 to 10 years from now
+            */
+            if (!movieYear.matches("^[0-9]{4}$")) { movieYear = null; } else {
+                int currYear = Calendar.getInstance().get(Calendar.YEAR);
+                if (Integer.parseInt(movieYear) > (currYear+10) || Integer.parseInt(movieYear) < 1888) { movieYear = null; }
+            }
+        } else { movieYear = null; }
+        return movieYear;
     }
 }
 
