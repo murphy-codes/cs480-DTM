@@ -1,6 +1,6 @@
 /*
 Author: Sam Alston, Tom Murphy, Jack (Daniel) Kinne [STD]
-Last Modified: 4/15/2018
+Last Modified: 4/26/2018
 Purpose: GetClues launches PresentClue activity on clue button press, and can cycle through movies the clues are dependant on,
     as well as launch GetAnswer or GiveUp.
  */
