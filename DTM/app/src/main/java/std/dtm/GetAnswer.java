@@ -1,6 +1,6 @@
 /*
 Authors: Sam Alston, Tom Murphy, Jack (Daniel) Kinne [STD]
-Last Modified: 4/26/2018
+Last Modified: 4/28/2018
 Purpose: GetAnswer Displays the movie that the app believes to be the answer to the question and the poster if available,
     Main Menu Button returns user to MainActivity
  */
@@ -113,7 +113,7 @@ public class GetAnswer extends AppCompatActivity {
     }
 
     //attempt to create/load an image via our 'Poster URL'
-    static class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+    class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
         //This class is adapted from code presented by user Satheeshkumar Somu via stackoverflow
         //https://stackoverflow.com/a/34354709
         ImageView posterIMG;
