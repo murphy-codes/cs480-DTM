@@ -1,6 +1,6 @@
 /*
-Author: Sam Alston, Tom Murphy, Jack (Daniel) Kinne [STD]
-Last Modified: 4/15/2018
+Authors: Sam Alston, Tom Murphy, Jack (Daniel) Kinne [STD]
+Last Modified: 4/28/2018
 Purpose: GetAnswer Displays the movie that the app believes to be the answer to the question and the poster if available,
     Main Menu Button returns user to MainActivity
  */
@@ -12,6 +12,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+//poster
+import java.io.InputStream;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
+import android.util.Log;
+import android.widget.ImageView;
 //ad stuff
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -30,6 +37,10 @@ public class GetAnswer extends AppCompatActivity {
     private int earned=100;
     private TextView displayTextView;
 
+    //poster
+    private ImageView posterIMG;
+    private String posterURL;
+
     //ad stuff
     private String admob_app_ID;
     private AdView mAdView;
@@ -44,9 +55,11 @@ public class GetAnswer extends AppCompatActivity {
         guess = thisIntent.getStringExtra(EXTRA_MESSAGE);
 
         String answer = GetClues.currentMovie.getTitle();
+        posterURL = GetClues.currentMovie.getPoster();
 
         answerTextView = (TextView) findViewById(R.id.answerTextview);
         displayTextView = (TextView) findViewById(R.id.displaytextview);
+        posterIMG = (ImageView) findViewById(R.id.imageViewPoster);
 
         //if the guess string is contained in the answer string, and is at least one fourth the length of the answer, you are correct
         if(guess.isEmpty()){
@@ -61,6 +74,10 @@ public class GetAnswer extends AppCompatActivity {
         } else {
             displayResultString = "Oh, actually we thought it was "+answer+".";
         }
+
+        new DownloadImageTask(posterIMG).execute();
+        //android:visibility="gone"
+        //posterIMG.setVisibility(View.VISIBLE);
 
         //displayTextView.setText(MainActivity.user.getDisplayString());
 
@@ -93,5 +110,32 @@ public class GetAnswer extends AppCompatActivity {
         final Intent intent = new Intent(this, AskQuestion.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
+    }
+
+    //attempt to create/load an image via our 'Poster URL'
+    class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+        //This class is adapted from code presented by user Satheeshkumar Somu via stackoverflow
+        //https://stackoverflow.com/a/34354709
+        ImageView posterIMG;
+
+        private DownloadImageTask(ImageView posterIMG) {
+            this.posterIMG = posterIMG;
+        }
+
+        protected Bitmap doInBackground(String... urls) {
+            Bitmap poster = null;
+            try {
+                InputStream in = new java.net.URL(posterURL).openStream();
+                poster = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+            return poster;
+        }
+
+        protected void onPostExecute(Bitmap result) {
+            posterIMG.setImageBitmap(result);
+        }
     }
 }

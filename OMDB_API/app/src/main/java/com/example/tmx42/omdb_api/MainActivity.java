@@ -1,5 +1,8 @@
 package com.example.tmx42.omdb_api;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -7,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -16,8 +20,11 @@ import org.json.JSONObject;
 import org.json.JSONTokener;
 
 import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 
 public class MainActivity extends AppCompatActivity {
@@ -28,11 +35,13 @@ public class MainActivity extends AppCompatActivity {
     TextView message;
     Button submit;
     TextView results;
+    ImageView posterIMG;
+    String posterURL;
 
     //Base URL of our API call
     static final String API_URL = "http://www.omdbapi.com/?";
     //If you're reusing our code, please use your own API key.
-    static final String API_KEY = "apikey=########";
+    String API_KEY;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +53,12 @@ public class MainActivity extends AppCompatActivity {
         message = (TextView) findViewById(R.id.textViewMessage);
         results = (TextView) findViewById(R.id.textViewResults);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
+
+        //grab the API key from secret.xml
+        String omdb_api_key = getString(R.string.OMDB_API_Key);
+        API_KEY = "apikey=" + omdb_api_key;
+
+        posterIMG = (ImageView) findViewById(R.id.imageViewPoster);
 
         submit = (Button) findViewById(R.id.buttonSubmit);
         submit.setOnClickListener(new View.OnClickListener() {
@@ -120,12 +135,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     class RetrieveFeedTask extends AsyncTask<Void, Void, String> {
+        //This class is adapted from code presented by Obaro Ogbo of AndroidAuthority
+          //https://www.androidauthority.com/use-remote-web-api-within-android-app-617869/
 
         private Exception exception;
 
-        protected void onPreExecute() {
-            progressBar.setVisibility(View.VISIBLE);
-        }
+        protected void onPreExecute() { progressBar.setVisibility(View.VISIBLE); }
 
         protected String doInBackground(Void... urls) {
 
@@ -165,10 +180,6 @@ public class MainActivity extends AppCompatActivity {
             // TODO: do something with the feed
 
                 try {
-                    //JSONObject object = (JSONObject) new JSONTokener(response).nextValue();
-                      //String requestID = object.getString("requestId");
-                      //int likelihood = object.getInt("likelihood");
-                      //JSONArray photos = object.getJSONArray("photos");
                     JSONObject movieObject = new JSONObject(response);
                     String title = movieObject.getString("Title");
                     String year = movieObject.getString("Year");
@@ -184,48 +195,62 @@ public class MainActivity extends AppCompatActivity {
                     String country = movieObject.getString("Country");
                     String awards = movieObject.getString("Awards");
                     String poster = movieObject.getString("Poster");
-                      //String ratings = movieObject.getString("Ratings");
-                      //String r0 = movieObject.getString("0");
-                      //String r1 = movieObject.getString("1");
-                      //String r2 = movieObject.getString("2");
-                    String metascore = movieObject.getString("Metascore");
-                    String imdbRating = movieObject.getString("imdbRating");
-                    String imdbVotes = movieObject.getString("imdbVotes");
                     String imdbID = movieObject.getString("imdbID");
                     String type = movieObject.getString("Type");
-                    String DVD = movieObject.getString("DVD");
-                    String boxOffice = movieObject.getString("BoxOffice");
-                    String production = movieObject.getString("Production");
-                    String website = movieObject.getString("Website");
                     String responseTF = movieObject.getString("Response");
 
-                    results.setText("Title: " + title + "\n" +
+                    String cleanerText = "Title: " + title + "\n" +
                             "Year: " + year + "\n" +
                             "Rated: " + rated + "\n" +
                             "Released: " + released + "\n" +
                             "Runtime: " + runtime + "\n" +
                             "Genre: " + genre + "\n" +
                             "Director: " + director + "\n" +
+                            "Writer: " + writer + "\n" +
                             "Actors: " + actors + "\n" +
                             "Plot: " + plot + "\n" +
                             "Language: " + language + "\n" +
                             "Country: " + country + "\n" +
                             "Awards: " + awards + "\n" +
-                            "Poster: " + poster + "\n" +
-                            "Metascore: " + metascore + "\n" +
-                            "imdbRating: " + imdbRating + "\n" +
-                            "imdbVotes: " + imdbVotes + "\n" +
                             "imdbID: " + imdbID + "\n" +
                             "Type: " + type + "\n" +
-                            "DVD release date: " + DVD + "\n" +
-                            "Box Office: " + boxOffice + "\n" +
-                            "Production: " + production + "\n" +
-                            "Website: " + website + "\n" +
-                            "Response: " + responseTF);
+                            "Response: " + responseTF;
+                    results.setText(cleanerText);
+
+                    posterURL = poster;
+                    new DownloadImageTask(posterIMG).execute();
+                    posterIMG.setVisibility(View.VISIBLE);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    results.setText("Movie not found, please try again!");
                 }
+        }
+    }
+
+    class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+        //This class is adapted from code presented by user Satheeshkumar Somu via stackoverflow
+          //https://stackoverflow.com/a/34354709
+        ImageView posterIMG;
+
+        public DownloadImageTask(ImageView posterIMG) {
+            this.posterIMG = posterIMG;
+        }
+
+        protected Bitmap doInBackground(String... urls) {
+            Bitmap mIcon11 = null;
+            try {
+                InputStream in = new java.net.URL(posterURL).openStream();
+                mIcon11 = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+            return mIcon11;
+        }
+
+        protected void onPostExecute(Bitmap result) {
+            posterIMG.setImageBitmap(result);
         }
     }
 }
