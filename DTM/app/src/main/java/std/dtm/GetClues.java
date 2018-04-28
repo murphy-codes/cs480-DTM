@@ -134,6 +134,9 @@ public class GetClues extends AppCompatActivity {
         clueFourButton.setEnabled(false);
         clueFiveButton.setEnabled(false);
         clueSixButton.setEnabled(false);
+        nextMovieButton.setEnabled(false);
+        submitButton.setEnabled(false);
+        guessButton.setEnabled(false);
 
         clueOneButton.setText("Summary $"+clueOneValue);
         clueTwoButton.setText("Cast $"+clueTwoValue);
@@ -306,6 +309,8 @@ public class GetClues extends AppCompatActivity {
                             runOmdbApi();
                         } catch (JSONException e) {
                             e.printStackTrace();
+                            Toast.makeText(getApplicationContext(), "I'm sorry, I didn't understand.", Toast.LENGTH_SHORT).show();
+                            finish();
                         }
                     }
                 }, new Response.ErrorListener() {
@@ -327,6 +332,9 @@ public class GetClues extends AppCompatActivity {
         clueFourButton.setEnabled(false);
         clueFiveButton.setEnabled(false);
         clueSixButton.setEnabled(false);
+        nextMovieButton.setEnabled(false);
+        guessButton.setEnabled(false);
+        submitButton.setEnabled(false);
         try{
             //instance the results we want to return.
             JSONObject jsonobj = responseArray.getJSONObject(movieGuessIter);
@@ -355,6 +363,8 @@ public class GetClues extends AppCompatActivity {
             movieGuessIter++;
         } catch (JSONException e) {
             e.printStackTrace();
+            Toast.makeText(getApplicationContext(), "No response from movie lookup", Toast.LENGTH_SHORT).show();
+            finish();
         }
     }
 
@@ -393,6 +403,8 @@ public class GetClues extends AppCompatActivity {
         protected void onPostExecute(String response) {
             if(response == null) {
                 response = "THERE WAS AN ERROR";
+                Toast.makeText(getApplicationContext(), "No response from IMDB", Toast.LENGTH_SHORT).show();
+                finish();
             }
             Log.i("INFO", response);
             //guessTextView.setText(response);
@@ -422,6 +434,9 @@ public class GetClues extends AppCompatActivity {
                 clueFourButton.setEnabled(true);
                 clueFiveButton.setEnabled(true);
                 clueSixButton.setEnabled(true);
+                nextMovieButton.setEnabled(true);
+                guessButton.setEnabled(true);
+                submitButton.setEnabled(true);
 
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -520,7 +535,7 @@ class movieResult {
     }
 
     public String getDirectedBy() {
-        return writtenBy;
+        return directedBy;
     }
 
     public String getActors() {
