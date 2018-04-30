@@ -54,10 +54,10 @@ public class MainActivity extends AppCompatActivity {
         displayTextView.setText(user.getDisplayString());
 
         playButtonMovies = (ImageButton) findViewById(R.id.playButtonMovies);
-        //playButtonTV = (ImageButton) findViewById(R.id.playButtonTV);
-        //playButtonVG = (ImageButton) findViewById(R.id.playButtonVG);
-        //playButtonBooks = (ImageButton) findViewById(R.id.playButtonBooks);
-        settingsButton = (ImageButton) findViewById(R.id.settingsbutton);
+        playButtonTV = (ImageButton) findViewById(R.id.playButtonTV);
+        playButtonVG = (ImageButton) findViewById(R.id.playButtonVG);
+        playButtonBooks = (ImageButton) findViewById(R.id.playButtonBooks);
+        settingsButton = (ImageButton) findViewById(R.id.settingsButton);
 
         playButtonMovies.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v){
@@ -66,9 +66,9 @@ public class MainActivity extends AppCompatActivity {
         });
 
         playButtonMovies.setOnTouchListener(new HighlightOnTouchListener(playButtonMovies));
-        //playButtonTV.setOnTouchListener(new HighlightOnTouchListener(playButtonTV));
-        //playButtonVG.setOnTouchListener(new HighlightOnTouchListener(playButtonVG));
-        //playButtonBooks.setOnTouchListener(new HighlightOnTouchListener(playButtonBooks));
+        playButtonTV.setOnTouchListener(new HighlightOnTouchListener(playButtonTV));
+        playButtonVG.setOnTouchListener(new HighlightOnTouchListener(playButtonVG));
+        playButtonBooks.setOnTouchListener(new HighlightOnTouchListener(playButtonBooks));
         settingsButton.setOnTouchListener(new HighlightOnTouchListener(settingsButton));
 
         settingsButton.setOnClickListener(new View.OnClickListener() {
