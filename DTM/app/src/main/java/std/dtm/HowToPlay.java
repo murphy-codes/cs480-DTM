@@ -17,6 +17,9 @@ public class HowToPlay extends AppCompatActivity {
 
         mainMenuButton = (ImageButton) findViewById(R.id.buttonMainMenu);
 
+        //highlight effects
+        mainMenuButton.setOnTouchListener(new HighlightOnTouchListener(mainMenuButton));
+
         mainMenuButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

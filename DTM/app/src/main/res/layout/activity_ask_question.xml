@@ -7,38 +7,54 @@
     android:background="@color/colorPrimary"
     tools:context="std.dtm.AskQuestion">
 
-    <ImageButton
-        android:id="@+id/settingsbutton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginEnd="19dp"
-        android:layout_marginTop="24dp"
-        app:srcCompat="@android:drawable/ic_menu_manage" />
-
-    <Button
-        android:id="@+id/micbutton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/dtmbutton"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="45dp"
-        android:height="256dip"
-        android:text="Ask"
-        android:background="@color/colorAccent"
-        android:fontFamily="sans-serif"/>
-
-    <Button
-        android:id="@+id/dtmbutton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/micbutton"
-        android:layout_marginBottom="20dp"
-        android:text="DTM"
-        android:background="@color/colorAccent"
-        android:fontFamily="sans-serif"/>
+    <LinearLayout
+        android:id="@+id/linearLayoutAskButtons"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginTop="80dp">
+        <ImageButton
+            android:id="@+id/micbutton"
+            android:src="@drawable/dtm_button_ask"
+            android:background="@null"
+            android:layout_width="340dp"
+            android:layout_height="85dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="100dp" />
+        <ImageButton
+            android:id="@+id/dtmbutton"
+            android:src="@drawable/dtm_button_dtm_grey"
+            android:background="@null"
+            android:layout_width="340dp"
+            android:layout_height="85dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp" />
+        <LinearLayout
+            android:id="@+id/linearLayoutExtraButtons"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="25dp" >
+            <ImageButton
+                android:id="@+id/buttonMainMenu"
+                android:src="@drawable/dtm_button_main_menu"
+                android:background="@null"
+                android:layout_width="255dp"
+                android:layout_height="64dp"
+                android:scaleType="fitXY"
+                android:layout_margin="15dp" />
+            <ImageButton
+                android:id="@+id/settingsButton"
+                android:src="@drawable/dtm_button_settings"
+                android:background="@null"
+                android:layout_width="67dp"
+                android:layout_height="75dp"
+                android:scaleType="fitXY"
+                android:layout_margin="15dp" />
+        </LinearLayout>
+    </LinearLayout>
 
     <TextView
         android:id="@+id/asktextview"

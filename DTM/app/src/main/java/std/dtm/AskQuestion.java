@@ -1,6 +1,6 @@
 /*
 Author: Sam Alston, Tom Murphy, Jack (Daniel) Kinne [STD]
-Last Modified: 4/15/2018
+Last Modified: 4/30/2018
 Purpose: AskQuestion can launch a microphone Intent to get voice input from user, then the DTM button will
     launch GetClues passing the stringified user input.
  */
@@ -27,9 +27,11 @@ public class AskQuestion extends AppCompatActivity {
     //settings button to change game settings
     private ImageButton settingsButton;
     //micButton launches Intent to get voice input and turn into a string.
-    private Button micButton;
+    private ImageButton micButton;
     //dtmButton launches PresentClues
-    private Button dtmButton;
+    private ImageButton dtmButton;
+    //main menu button to return to the main menu
+    private ImageButton mainMenuButton;
     //askTextView holds instructions for user until voice input overrides them
     private TextView askTextView;
     //code for speech input
@@ -46,16 +48,26 @@ public class AskQuestion extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ask_question);
 
-        settingsButton = (ImageButton) findViewById(R.id.settingsbutton);
-        micButton = (Button) findViewById(R.id.micbutton);
-        dtmButton = (Button) findViewById(R.id.dtmbutton);
+        micButton = (ImageButton) findViewById(R.id.micbutton);
+        dtmButton = (ImageButton) findViewById(R.id.dtmbutton);
+        mainMenuButton = (ImageButton) findViewById(R.id.buttonMainMenu);
+        settingsButton = (ImageButton) findViewById(R.id.settingsButton);
         askTextView = (TextView) findViewById(R.id.asktextview);
         displayTextView = (TextView) findViewById(R.id.displaytextview);
 
         displayTextView.setText(MainActivity.user.getDisplayString());
 
+        //highlight effects
+        micButton.setOnTouchListener(new HighlightOnTouchListener(micButton));
+        dtmButton.setOnTouchListener(new HighlightOnTouchListener(dtmButton));
+        mainMenuButton.setOnTouchListener(new HighlightOnTouchListener(mainMenuButton));
+        settingsButton.setOnTouchListener(new HighlightOnTouchListener(settingsButton));
+
         //initially userInput is empty, so we know not to launch dtm until user asks a question
-        userInput = "";
+        //userInput = "";
+
+        //FOR TESTING PURPOSES
+        userInput = "Bruce Willis drives a taxi and fights aliens";
 
         settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,10 +75,19 @@ public class AskQuestion extends AppCompatActivity {
                 goToSettings();
             }
         });
+
+        mainMenuButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToMainMenu();
+            }
+        });
+
         micButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 askSpeechInput();
+                dtmButton.setImageResource(R.drawable.dtm_button_dtm);
             }
         });
 
@@ -132,5 +153,12 @@ public class AskQuestion extends AppCompatActivity {
             }
 
         }
+    }
+
+    //set onclick Listener to return to MainActivity
+    private void goToMainMenu() {
+        final Intent intent = new Intent(this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
 }
