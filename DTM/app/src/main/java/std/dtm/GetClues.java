@@ -1,6 +1,6 @@
 /*
 Author: Sam Alston, Tom Murphy, Jack (Daniel) Kinne [STD]
-Last Modified: 4/26/2018
+Last Modified: 4/30/2018
 Purpose: GetClues launches PresentClue activity on clue button press, and can cycle through movies the clues are dependant on,
     as well as launch GetAnswer or GiveUp.
  */
@@ -144,6 +144,17 @@ public class GetClues extends AppCompatActivity {
         clueFourButton.setText("Production/Release $"+clueFourValue);
         clueFiveButton.setText("Genre/Rating $"+clueFiveValue);
         clueSixButton.setText("Awards $"+clueSixValue);
+
+        //highlight effects
+        //clueOneButton.setOnTouchListener(new HighlightOnTouchListener(clueOneButton));
+        //clueTwoButton.setOnTouchListener(new HighlightOnTouchListener(clueTwoButton));
+        //clueThreeButton.setOnTouchListener(new HighlightOnTouchListener(clueThreeButton));
+        //clueFourButton.setOnTouchListener(new HighlightOnTouchListener(clueFourButton));
+        //clueFiveButton.setOnTouchListener(new HighlightOnTouchListener(clueFiveButton));
+        //clueSixButton.setOnTouchListener(new HighlightOnTouchListener(clueSixButton));
+        //nextMovieButton.setOnTouchListener(new HighlightOnTouchListener(nextMovieButton));
+        //submitButton.setOnTouchListener(new HighlightOnTouchListener(submitButton));
+        //guessButton.setOnTouchListener(new HighlightOnTouchListener(guessButton));
 
         //set onclick Listeners for buttons
         submitButton.setOnClickListener(new View.OnClickListener() {
