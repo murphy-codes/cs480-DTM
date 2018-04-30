@@ -14,7 +14,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
         <ImageButton
-            android:id="@+id/playbuttonMovies"
+            android:id="@+id/playButtonMovies"
             android:src="@drawable/dtm_button_movies"
             android:background="@null"
             android:layout_width="340dp"
