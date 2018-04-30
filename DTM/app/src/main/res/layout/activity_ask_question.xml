@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
     tools:context="std.dtm.AskQuestion">
 
     <ImageButton
@@ -25,7 +26,7 @@
         android:layout_marginBottom="45dp"
         android:height="256dip"
         android:text="Ask"
-        android:background="#ffffd000"
+        android:background="@color/colorAccent"
         android:fontFamily="sans-serif"/>
 
     <Button
@@ -36,7 +37,7 @@
         android:layout_alignStart="@+id/micbutton"
         android:layout_marginBottom="20dp"
         android:text="DTM"
-        android:background="#ffffd000"
+        android:background="@color/colorAccent"
         android:fontFamily="sans-serif"/>
 
     <TextView
