@@ -68,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //highlight effects
         playButtonMovies.setOnTouchListener(new HighlightOnTouchListener(playButtonMovies));
         playButtonTV.setOnTouchListener(new HighlightOnTouchListener(playButtonTV));
         playButtonVG.setOnTouchListener(new HighlightOnTouchListener(playButtonVG));
@@ -154,7 +155,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
-
 }//end mainactivity
 
 //store settings information for the play session

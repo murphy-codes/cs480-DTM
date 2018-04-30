@@ -34,6 +34,9 @@ public class Settings extends AppCompatActivity {
             }
         });
 
+        //highlight effects
+        mainMenuButton.setOnTouchListener(new HighlightOnTouchListener(mainMenuButton));
+
         if(MainActivity.settings.isFreePlaySet()) {
             freeplayswitch.setChecked(true);
         }
