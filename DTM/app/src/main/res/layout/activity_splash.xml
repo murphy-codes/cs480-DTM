@@ -4,10 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorSplashBackground"
+    android:background="@color/colorPrimary"
     tools:context="std.dtm.Splash">
 
     <LinearLayout
+        android:id="@+id/linearLayoutSplashLog"
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -16,8 +17,16 @@
             android:id="@+id/imageViewSplashLogo"
             android:src="@drawable/dtm_splash_logo"
             android:layout_gravity="center"
-            android:layout_width="250dp"
-            android:layout_height="250dp" />
+            android:layout_width="325dp"
+            android:layout_height="400dp"
+            android:layout_marginTop="75dp" />
+        <ImageView
+            android:id="@+id/imageViewDevelopedBy"
+            android:src="@drawable/dtm_developed_by"
+            android:layout_gravity="center"
+            android:layout_width="325dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="40dp" />
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
