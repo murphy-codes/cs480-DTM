@@ -9,11 +9,8 @@ import android.content.Intent;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.EditText;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
 
 import static std.dtm.AskQuestion.EXTRA_MESSAGE;
 
