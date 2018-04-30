@@ -21,7 +21,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -29,11 +28,13 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
-    //launch Ask question when you play
+    //launch Ask question when you click a play button (movies)
     private ImageButton playButtonMovies;
     private ImageButton playButtonTV;
     private ImageButton playButtonVG;
     private ImageButton playButtonBooks;
+    private ImageButton howToButton;
+    private ImageButton leaderboardsButton;
     private ImageButton settingsButton;
     private TextView displayTextView;
     public static GameSettings settings;
@@ -54,10 +55,12 @@ public class MainActivity extends AppCompatActivity {
         displayTextView.setText(user.getDisplayString());
 
         playButtonMovies = (ImageButton) findViewById(R.id.playButtonMovies);
-        //playButtonTV = (ImageButton) findViewById(R.id.playButtonTV);
-        //playButtonVG = (ImageButton) findViewById(R.id.playButtonVG);
-        //playButtonBooks = (ImageButton) findViewById(R.id.playButtonBooks);
-        settingsButton = (ImageButton) findViewById(R.id.settingsbutton);
+        playButtonTV = (ImageButton) findViewById(R.id.playButtonTV);
+        playButtonVG = (ImageButton) findViewById(R.id.playButtonVG);
+        playButtonBooks = (ImageButton) findViewById(R.id.playButtonBooks);
+        howToButton = (ImageButton) findViewById(R.id.howtoButton);
+        leaderboardsButton = (ImageButton) findViewById(R.id.leaderboardButton);
+        settingsButton = (ImageButton) findViewById(R.id.settingsButton);
 
         playButtonMovies.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v){
@@ -66,10 +69,19 @@ public class MainActivity extends AppCompatActivity {
         });
 
         playButtonMovies.setOnTouchListener(new HighlightOnTouchListener(playButtonMovies));
-        //playButtonTV.setOnTouchListener(new HighlightOnTouchListener(playButtonTV));
-        //playButtonVG.setOnTouchListener(new HighlightOnTouchListener(playButtonVG));
-        //playButtonBooks.setOnTouchListener(new HighlightOnTouchListener(playButtonBooks));
+        playButtonTV.setOnTouchListener(new HighlightOnTouchListener(playButtonTV));
+        playButtonVG.setOnTouchListener(new HighlightOnTouchListener(playButtonVG));
+        playButtonBooks.setOnTouchListener(new HighlightOnTouchListener(playButtonBooks));
+        howToButton.setOnTouchListener(new HighlightOnTouchListener(howToButton));
+        leaderboardsButton.setOnTouchListener(new HighlightOnTouchListener(leaderboardsButton));
         settingsButton.setOnTouchListener(new HighlightOnTouchListener(settingsButton));
+
+        howToButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToHowTo();
+            }
+        });
 
         settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,6 +100,11 @@ public class MainActivity extends AppCompatActivity {
         Intent askQuestionIntent = new Intent(this, AskQuestion.class);
         startActivity(askQuestionIntent);
 
+    }
+
+    private void goToHowTo(){
+        Intent settingsIntent = new Intent(this, HowToPlay.class);
+        startActivity(settingsIntent);
     }
 
     //before we launch, check we have permissions.
