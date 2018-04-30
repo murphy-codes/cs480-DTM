@@ -64,10 +64,7 @@ public class AskQuestion extends AppCompatActivity {
         settingsButton.setOnTouchListener(new HighlightOnTouchListener(settingsButton));
 
         //initially userInput is empty, so we know not to launch dtm until user asks a question
-        //userInput = "";
-
-        //FOR TESTING PURPOSES
-        userInput = "Bruce Willis drives a taxi and fights aliens";
+        userInput = "";
 
         settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
