@@ -16,6 +16,7 @@ import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,15 +44,15 @@ import static std.dtm.AskQuestion.EXTRA_MESSAGE;
 
 public class GetClues extends AppCompatActivity {
 
-    private Button nextMovieButton;
-    private Button submitButton;
-    private Button guessButton;
-    private Button clueTwoButton;
-    private Button clueThreeButton;
-    private Button clueFourButton;
-    private Button clueFiveButton;
-    private Button clueSixButton;
-    private Button clueOneButton;
+    private ImageButton nextMovieButton;
+    private ImageButton submitButton;
+    private ImageButton guessButton;
+    private ImageButton clueOneButton;
+    private ImageButton clueTwoButton;
+    private ImageButton clueThreeButton;
+    private ImageButton clueFourButton;
+    private ImageButton clueFiveButton;
+    private ImageButton clueSixButton;
     private TextView guessTextView;
     private String searchTerm;
     private String userInput;
@@ -117,17 +118,17 @@ public class GetClues extends AppCompatActivity {
         userInput = "";
 
         //find buttons
-        nextMovieButton = (Button) findViewById(R.id.nextmoviebutton);
-        submitButton = (Button) findViewById(R.id.submitbutton);
-        guessButton = (Button) findViewById(R.id.guessmoviebutton);
-        clueOneButton = (Button) findViewById(R.id.clueonebutton);
-        clueTwoButton = (Button) findViewById(R.id.cluetwobutton);
-        clueThreeButton = (Button) findViewById(R.id.cluethreebutton);
-        clueFourButton = (Button) findViewById(R.id.cluefourbutton);
-        clueFiveButton = (Button) findViewById(R.id.cluefivebutton);
-        clueSixButton = (Button) findViewById(R.id.cluesixbutton);
+        nextMovieButton = (ImageButton) findViewById(R.id.nextmoviebutton);
+        submitButton = (ImageButton) findViewById(R.id.submitbutton);
+        guessButton = (ImageButton) findViewById(R.id.guessmoviebutton);
+        clueOneButton = (ImageButton) findViewById(R.id.clueonebutton);
+        clueTwoButton = (ImageButton) findViewById(R.id.cluetwobutton);
+        clueThreeButton = (ImageButton) findViewById(R.id.cluethreebutton);
+        clueFourButton = (ImageButton) findViewById(R.id.cluefourbutton);
+        clueFiveButton = (ImageButton) findViewById(R.id.cluefivebutton);
+        clueSixButton = (ImageButton) findViewById(R.id.cluesixbutton);
 
-        //disable clue buttons until their textviews have content
+        //disable (clue) buttons until their textviews have content
         clueOneButton.setEnabled(false);
         clueTwoButton.setEnabled(false);
         clueThreeButton.setEnabled(false);
@@ -138,23 +139,23 @@ public class GetClues extends AppCompatActivity {
         submitButton.setEnabled(false);
         guessButton.setEnabled(false);
 
-        clueOneButton.setText("Summary $"+clueOneValue);
-        clueTwoButton.setText("Cast $"+clueTwoValue);
-        clueThreeButton.setText("Writer/Director $"+clueThreeValue);
-        clueFourButton.setText("Production/Release $"+clueFourValue);
-        clueFiveButton.setText("Genre/Rating $"+clueFiveValue);
-        clueSixButton.setText("Awards $"+clueSixValue);
+        //clueOneButton.setText("Summary $"+clueOneValue);
+        //clueTwoButton.setText("Cast $"+clueTwoValue);
+        //clueThreeButton.setText("Writer/Director $"+clueThreeValue);
+        //clueFourButton.setText("Production/Release $"+clueFourValue);
+        //clueFiveButton.setText("Genre/Rating $"+clueFiveValue);
+        //clueSixButton.setText("Awards $"+clueSixValue);
 
         //highlight effects
-        //clueOneButton.setOnTouchListener(new HighlightOnTouchListener(clueOneButton));
-        //clueTwoButton.setOnTouchListener(new HighlightOnTouchListener(clueTwoButton));
-        //clueThreeButton.setOnTouchListener(new HighlightOnTouchListener(clueThreeButton));
-        //clueFourButton.setOnTouchListener(new HighlightOnTouchListener(clueFourButton));
-        //clueFiveButton.setOnTouchListener(new HighlightOnTouchListener(clueFiveButton));
-        //clueSixButton.setOnTouchListener(new HighlightOnTouchListener(clueSixButton));
-        //nextMovieButton.setOnTouchListener(new HighlightOnTouchListener(nextMovieButton));
-        //submitButton.setOnTouchListener(new HighlightOnTouchListener(submitButton));
-        //guessButton.setOnTouchListener(new HighlightOnTouchListener(guessButton));
+        clueOneButton.setOnTouchListener(new HighlightOnTouchListener(clueOneButton));
+        clueTwoButton.setOnTouchListener(new HighlightOnTouchListener(clueTwoButton));
+        clueThreeButton.setOnTouchListener(new HighlightOnTouchListener(clueThreeButton));
+        clueFourButton.setOnTouchListener(new HighlightOnTouchListener(clueFourButton));
+        clueFiveButton.setOnTouchListener(new HighlightOnTouchListener(clueFiveButton));
+        clueSixButton.setOnTouchListener(new HighlightOnTouchListener(clueSixButton));
+        nextMovieButton.setOnTouchListener(new HighlightOnTouchListener(nextMovieButton));
+        submitButton.setOnTouchListener(new HighlightOnTouchListener(submitButton));
+        guessButton.setOnTouchListener(new HighlightOnTouchListener(guessButton));
 
         //set onclick Listeners for buttons
         submitButton.setOnClickListener(new View.OnClickListener() {
@@ -291,7 +292,7 @@ public class GetClues extends AppCompatActivity {
                     userInput = result.get(0);
                     guessTextView.setText("Current Guess: "+userInput);
                     //change submitButton text from "give up" to "submit" when an answer is provided
-                    submitButton.setText("Submit");
+                    submitButton.setImageResource(R.drawable.dtm_button_submit);
                     goToAnswer();
                 }
                 break;
