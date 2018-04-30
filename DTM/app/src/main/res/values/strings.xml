@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">DTM</string>
+    <string name="app_how_to">Have you ever not been able to remember a movie when chatting with friends? Instead of just Googling it, play Don\'t Tell Me!\n\nDon\'t Tell Me is a memory game that wishes to help you remember by giving you clues. Simply speak what you remember about the movie that\'s on the edge of your memory and we\'ll search for it, then provide you with clues. Each clue costs an amount of cash, and successful guesses earn you more cash to spend on future guesses!</string>
 </resources>
