@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
     tools:context="std.dtm.GetClues">
 
     <Button
@@ -17,7 +18,7 @@
         android:width="80dp"
         android:height="120dp"
         android:text="I don't think this is my movie"
-        android:background="#ffffd000"
+        android:background="@color/colorAccent"
         android:fontFamily="sans-serif"/>
 
     <Button
@@ -29,7 +30,7 @@
         android:width="80dp"
         android:height="120dp"
         android:text="Give up"
-        android:background="#ffffd000"
+        android:background="@color/colorAccent"
         android:fontFamily="sans-serif"/>
 
     <Button
@@ -42,7 +43,7 @@
         android:width="80dp"
         android:height="120dp"
         android:text="guess"
-        android:background="#ffffd000"
+        android:background="@color/colorAccent"
         android:fontFamily="sans-serif" />
 
     <Button
@@ -52,7 +53,7 @@
         android:layout_alignParentStart="true"
         android:layout_alignTop="@+id/nextmoviebutton"
         android:layout_marginStart="30dp"
-        android:background="#ffffd000"
+        android:background="@color/colorAccent"
         android:fontFamily="sans-serif"
         android:text="Clue #1" />
 
@@ -72,7 +73,7 @@
         android:layout_alignBottom="@+id/nextmoviebutton"
         android:layout_alignStart="@+id/clueonebutton"
         android:text="Clue # 2"
-        android:background="#ffffd000"
+        android:background="@color/colorAccent"
         android:fontFamily="sans-serif"/>
 
     <Button
@@ -82,7 +83,7 @@
         android:layout_alignStart="@+id/cluetwobutton"
         android:layout_alignTop="@+id/submitbutton"
         android:text="Clue # 3"
-        android:background="#ffffd000"
+        android:background="@color/colorAccent"
         android:fontFamily="sans-serif"/>
 
     <Button
@@ -92,7 +93,7 @@
         android:layout_alignBottom="@+id/submitbutton"
         android:layout_alignStart="@+id/cluethreebutton"
         android:text="Clue # 4"
-        android:background="#ffffd000"
+        android:background="@color/colorAccent"
         android:fontFamily="sans-serif"/>
 
     <Button
@@ -102,7 +103,7 @@
         android:layout_alignStart="@+id/cluefourbutton"
         android:layout_alignTop="@+id/guessmoviebutton"
         android:text="Clue # 5"
-        android:background="#ffffd000"
+        android:background="@color/colorAccent"
         android:fontFamily="sans-serif"/>
 
     <Button
@@ -112,7 +113,7 @@
         android:layout_alignBottom="@+id/guessmoviebutton"
         android:layout_alignStart="@+id/cluefivebutton"
         android:text="Clue # 6"
-        android:background="#ffffd000"
+        android:background="@color/colorAccent"
         android:fontFamily="sans-serif"/>
 
     <TextView
