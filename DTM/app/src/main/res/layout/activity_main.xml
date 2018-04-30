@@ -8,7 +8,7 @@
     tools:context="std.dtm.MainActivity">
 
     <LinearLayout
-        android:id="@+id/linearLayoutSplashLog"
+        android:id="@+id/linearLayoutPlayButtons"
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -47,7 +47,7 @@
     </LinearLayout>
 
     <ImageButton
-        android:id="@+id/settingsbutton"
+        android:id="@+id/settingsButton"
         android:src="@drawable/dtm_button_settings"
         android:background="@null"
         android:layout_width="wrap_content"
