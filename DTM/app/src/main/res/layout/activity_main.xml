@@ -12,7 +12,8 @@
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_marginTop="80dp">
         <ImageButton
             android:id="@+id/playButtonMovies"
             android:src="@drawable/dtm_button_movies"
@@ -44,18 +45,40 @@
             android:layout_height="85dp"
             android:layout_gravity="center"
             android:layout_marginTop="5dp" />
-    </LinearLayout>
+        <LinearLayout
+            android:id="@+id/linearLayoutExtraButtons"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <ImageButton
+                android:id="@+id/howtoButton"
+                android:src="@drawable/dtm_button_howto"
+                android:background="@null"
+                android:layout_width="68dp"
+                android:layout_height="75dp"
+                android:scaleType="fitXY"
+                android:layout_margin="20dp" />
+            <ImageButton
+                android:id="@+id/leaderboardButton"
+                android:src="@drawable/dtm_button_leaderboards"
+                android:background="@null"
+                android:layout_width="68dp"
+                android:layout_height="75dp"
+                android:scaleType="fitXY"
+                android:layout_margin="20dp" />
+            <ImageButton
+                android:id="@+id/settingsButton"
+                android:src="@drawable/dtm_button_settings"
+                android:background="@null"
+                android:layout_width="67dp"
+                android:layout_height="75dp"
+                android:scaleType="fitXY"
+                android:layout_margin="20dp" />
+            </LinearLayout>
+        </LinearLayout>
 
-    <ImageButton
-        android:id="@+id/settingsButton"
-        android:src="@drawable/dtm_button_settings"
-        android:background="@null"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginEnd="20dp"
-        android:layout_marginTop="20dp" />
+
 
     <TextView
         android:id="@+id/displaytextview"
