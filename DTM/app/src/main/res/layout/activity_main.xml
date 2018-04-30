@@ -20,7 +20,7 @@
             android:layout_width="340dp"
             android:layout_height="85dp"
             android:layout_gravity="center" />
-        <ImageView
+        <ImageButton
             android:id="@+id/playButtonTV"
             android:src="@drawable/dtm_button_tv_shows"
             android:background="@null"
@@ -28,7 +28,7 @@
             android:layout_height="85dp"
             android:layout_gravity="center"
             android:layout_marginTop="5dp" />
-        <ImageView
+        <ImageButton
             android:id="@+id/playButtonVG"
             android:src="@drawable/dtm_button_video_games"
             android:background="@null"
@@ -36,7 +36,7 @@
             android:layout_height="85dp"
             android:layout_gravity="center"
             android:layout_marginTop="5dp" />
-        <ImageView
+        <ImageButton
             android:id="@+id/playButtonBooks"
             android:src="@drawable/dtm_button_books"
             android:background="@null"
