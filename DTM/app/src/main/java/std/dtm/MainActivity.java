@@ -1,11 +1,11 @@
 /*
 Author: Sam Alston, Tom Murphy, Jack (Daniel) Kinne [STD]
-Last Modified: 4/15/2018
+Last Modified: 4/30/2018
 Purpose: MainActivity is the main menu for the DTM application
     DTM is the Don't Tell Me game where you pose a question about a movie, the app finds it for you and presents clues
     Reclaim your outsourced memory, ask, don't tell me.
 
-    PLAY! button launches AskQuestion
+    'Movie' button launches AskQuestion
  */
 package std.dtm;
 
@@ -25,7 +25,7 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity {
 
     //launch Ask question when you play
-    private Button playButton;
+    private ImageButton playButtonMovies;
     private ImageButton settingsButton;
     private TextView displayTextView;
     public static GameSettings settings;
@@ -45,10 +45,10 @@ public class MainActivity extends AppCompatActivity {
         displayTextView = (TextView) findViewById(R.id.displaytextview);
         displayTextView.setText(user.getDisplayString());
 
-        playButton = (Button) findViewById(R.id.playbutton);
+        playButtonMovies = (ImageButton) findViewById(R.id.playbuttonMovies);
         settingsButton = (ImageButton) findViewById(R.id.settingsbutton);
 
-        playButton.setOnClickListener(new View.OnClickListener() {
+        playButtonMovies.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v){
                 checkPermission();
             }
