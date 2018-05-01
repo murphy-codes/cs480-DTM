@@ -94,16 +94,6 @@ public class GetClues extends AppCompatActivity {
         //initially we want the first movie result from google
         movieGuessIter=0;
 
-        //if freeplay enabled, disable cost
-        if(MainActivity.settings.isFreePlaySet()){
-            clueOneValue = 0;
-            clueTwoValue = 0;
-            clueThreeValue = 0;
-            clueFourValue = 0;
-            clueFiveValue = 0;
-            clueSixValue = 0;
-        }
-
         //api keys
         omdb_api_key = "&apikey="+getString(R.string.omdb_search_api_key);
         search_api_key = getString(R.string.google_search_api_key);
@@ -157,6 +147,24 @@ public class GetClues extends AppCompatActivity {
         submitButton.setOnTouchListener(new HighlightOnTouchListener(submitButton));
         guessButton.setOnTouchListener(new HighlightOnTouchListener(guessButton));
 
+        //if freeplay enabled
+        if(MainActivity.settings.isFreePlaySet()){
+            //disable costs
+            clueOneValue = 0;
+            clueTwoValue = 0;
+            clueThreeValue = 0;
+            clueFourValue = 0;
+            clueFiveValue = 0;
+            clueSixValue = 0;
+            //adjust clue buttons (remmove prices)
+            clueOneButton.setImageResource(R.drawable.dtm_button_clue1_summary_free);
+            clueTwoButton.setImageResource(R.drawable.dtm_button_clue2_cast_free);
+            clueThreeButton.setImageResource(R.drawable.dtm_button_clue3_writer_director_free);
+            clueFourButton.setImageResource(R.drawable.dtm_button_clue4_production_release_free);
+            clueFiveButton.setImageResource(R.drawable.dtm_button_clue5_genre_rating_free);
+            clueSixButton.setImageResource(R.drawable.dtm_button_clue6_awards_free);
+        }
+
         //set onclick Listeners for buttons
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -169,8 +177,9 @@ public class GetClues extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(!MainActivity.settings.isFreePlaySet()){
+                    clueOneButton.setImageResource(R.drawable.dtm_button_clue1_summary_grey);
                     clueOneButton.setEnabled(false);
-                }
+                } else { clueOneButton.setImageResource(R.drawable.dtm_button_clue1_summary_free_grey); }
                 presentClue("1");
                 MainActivity.user.subtractBalance(clueOneValue);
                 displayTextView.setText(MainActivity.user.getDisplayString());
@@ -180,8 +189,9 @@ public class GetClues extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(!MainActivity.settings.isFreePlaySet()){
+                    clueTwoButton.setImageResource(R.drawable.dtm_button_clue2_cast_grey);
                     clueTwoButton.setEnabled(false);
-                }
+                } else { clueTwoButton.setImageResource(R.drawable.dtm_button_clue2_cast_free_grey); }
                 presentClue("2");
                 MainActivity.user.subtractBalance(clueTwoValue);
                 displayTextView.setText(MainActivity.user.getDisplayString());
@@ -191,8 +201,9 @@ public class GetClues extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(!MainActivity.settings.isFreePlaySet()){
+                    clueThreeButton.setImageResource(R.drawable.dtm_button_clue3_writer_director_grey);
                     clueThreeButton.setEnabled(false);
-                }
+                } else { clueThreeButton.setImageResource(R.drawable.dtm_button_clue3_writer_director_free_grey); }
                 presentClue("3");
                 MainActivity.user.subtractBalance(clueThreeValue);
                 displayTextView.setText(MainActivity.user.getDisplayString());
@@ -202,8 +213,9 @@ public class GetClues extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(!MainActivity.settings.isFreePlaySet()){
+                    clueFourButton.setImageResource(R.drawable.dtm_button_clue4_production_release_grey);
                     clueFourButton.setEnabled(false);
-                }
+                } else { clueFourButton.setImageResource(R.drawable.dtm_button_clue4_production_release_free_grey); }
                 presentClue("4");
                 MainActivity.user.subtractBalance(clueFourValue);
                 displayTextView.setText(MainActivity.user.getDisplayString());
@@ -213,8 +225,9 @@ public class GetClues extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(!MainActivity.settings.isFreePlaySet()){
+                    clueFiveButton.setImageResource(R.drawable.dtm_button_clue5_genre_rating_grey);
                     clueFiveButton.setEnabled(false);
-                }
+                } else { clueFiveButton.setImageResource(R.drawable.dtm_button_clue5_genre_rating_free_grey); }
                 presentClue("5");
                 MainActivity.user.subtractBalance(clueFiveValue);
                 displayTextView.setText(MainActivity.user.getDisplayString());
@@ -224,8 +237,9 @@ public class GetClues extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(!MainActivity.settings.isFreePlaySet()){
+                    clueSixButton.setImageResource(R.drawable.dtm_button_clue6_awards_grey);
                     clueSixButton.setEnabled(false);
-                }
+                } else { clueSixButton.setImageResource(R.drawable.dtm_button_clue6_awards_free_grey); }
                 presentClue("6");
                 MainActivity.user.subtractBalance(clueSixValue);
                 displayTextView.setText(MainActivity.user.getDisplayString());
